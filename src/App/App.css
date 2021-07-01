@@ -1,3 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+:root {
+  --fuchsia-100: #ef5da8;
+  --iris-100: #5d5fef;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 40px;
+  margin: 0;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 23px;
+  margin: 0;
+}
+
+p {
+  font-size: 13px;
+  line-height: 15px;
+  margin: 0;
+}
+
 .App {
   text-align: center;
 }
