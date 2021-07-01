@@ -1,0 +1,55 @@
+.button {
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: "Work Sans", sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  height: 40px;
+  padding: 0 24px;
+  text-overflow: ellipsis;
+  transition: 0.3s;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.button__primary {
+  background-color: var(--iris-100);
+  border: 1px solid var(--iris-100);
+  color: #ffffff;
+}
+
+.button__primary:hover {
+  background-color: var(--iris-80);
+}
+
+.button__primary:disabled {
+  background-color: var(--iris-60);
+  border-color: var(--iris-60);
+  cursor: default;
+}
+
+.button__secondary {
+  background-color: #ffffff;
+  border: 1px solid var(--iris-100);
+  color: var(--iris-100);
+}
+
+.button__secondary:hover {
+  background-color: var(--light-grey);
+}
+
+.button__secondary:disabled {
+  background-color: #ffffff;
+  border-color: var(--dark-grey);
+  color: var(--dark-grey);
+  cursor: default;
+}
+
+.button__github {
+  background-color: #000000;
+  border: 1px solid #000000;
+  color: #ffffff;
+}
+.button__github:hover {
+  background-color: #222222;
+}
