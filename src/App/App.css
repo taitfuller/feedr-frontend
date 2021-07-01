@@ -2,7 +2,13 @@
 
 :root {
   --fuchsia-100: #ef5da8;
+  --fuchsia-80: #f178b6;
+  --fuchsia-60: #fcddec;
   --iris-100: #5d5fef;
+  --iris-80: #7879f1;
+  --iris-60: #a5a6f6;
+  --light-grey: #eeeeee;
+  --dark-grey: #757575;
 }
 
 html {
