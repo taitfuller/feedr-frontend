@@ -4,7 +4,7 @@ import styles from "./style.module.css";
 interface ButtonProps {
   variant?: "primary" | "secondary" | "github";
   text: string;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset";
   handleOnClick: React.MouseEventHandler;
   disabled?: boolean;
 }
