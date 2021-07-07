@@ -1,0 +1,25 @@
+.barContainer {
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  height: 12px;
+  width: 100%;
+  position: relative;
+  margin-top: 100px;
+}
+
+.barFrac {
+  border-radius: 10px;
+  height: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s;
+}
+
+.barFeature {
+  background-color: var(--iris-100);
+}
+
+.barBug {
+  background-color: var(--fuchsia-100);
+}
