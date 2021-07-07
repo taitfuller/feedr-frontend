@@ -1,0 +1,35 @@
+.textareaContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.textareaLabel {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.textarea {
+  background-color: var(--light-grey);
+  border: 2px solid var(--light-grey);
+  border-radius: 14px;
+  font-family: "Work Sans", sans-serif;
+  font-size: 13px;
+  height: max-content;
+  letter-spacing: -0.02em;
+  line-height: 15px;
+  margin: 0;
+  padding: 12px;
+  resize: none;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.textarea:focus {
+  border: 2px solid var(--dark-grey);
+  outline: none;
+  transition: 0.3s;
+}
+
+.textarea::placeholder {
+  font-style: italic;
+}
