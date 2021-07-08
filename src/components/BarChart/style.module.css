@@ -4,7 +4,7 @@
   height: 12px;
   width: 100%;
   position: relative;
-  margin-top: 100px;
+  margin-bottom: 8px;
 }
 
 .barFrac {
@@ -22,4 +22,12 @@
 
 .barBug {
   background-color: var(--fuchsia-100);
+}
+
+.barLabel {
+  position: absolute;
+}
+
+.percent {
+  font-weight: bold;
 }
