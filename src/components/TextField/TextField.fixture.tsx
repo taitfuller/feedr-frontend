@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import TextField from "./index";
 
-const TextFieldFixture = (): JSX.Element => {
+interface FunctionalTextFieldProps {
+  label?: string;
+  size?: "small" | "large";
+}
+
+const FunctionalTextField: React.FC<FunctionalTextFieldProps> = ({
+  label = "",
+  size = "large",
+}) => {
   const [value, setValue] = useState("");
 
   return (
-    <>
-      <TextField
-        label="Search..."
-        size="large"
-        textValue={value}
-        onChangeHandler={setValue}
-      />
-      <br />
-      <TextField
-        label="Search..."
-        size="small"
-        textValue={value}
-        onChangeHandler={setValue}
-      />
-    </>
+    <TextField
+      label={label}
+      size={size}
+      textValue={value}
+      onChangeHandler={setValue}
+    />
   );
 };
 
-export default TextFieldFixture;
+export default {
+  large: <FunctionalTextField label="Search..." size="large" />,
+  small: <FunctionalTextField label="Search..." size="small" />,
+};
