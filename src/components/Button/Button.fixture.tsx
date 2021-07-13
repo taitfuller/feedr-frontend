@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./index";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const dummyClick = (): void => {
   console.log("Click!");
@@ -24,6 +25,7 @@ export default {
   github: (
     <Button
       text={"Sign in with GitHub"}
+      icon={faGithub}
       variant={"github"}
       handleOnClick={dummyClick}
       disabled={false}

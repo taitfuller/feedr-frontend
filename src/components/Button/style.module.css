@@ -1,6 +1,8 @@
 .button {
+  align-items: center;
   border-radius: 14px;
   cursor: pointer;
+  display: flex;
   font-family: "Work Sans", sans-serif;
   font-size: 13px;
   font-weight: bold;
@@ -10,6 +12,10 @@
   transition: 0.3s;
   white-space: nowrap;
   width: fit-content;
+}
+
+.buttonIcon {
+  margin-right: 12px;
 }
 
 .button__primary {

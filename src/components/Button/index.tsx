@@ -1,9 +1,12 @@
 import React from "react";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./style.module.css";
 
 interface ButtonProps {
   variant?: "primary" | "secondary" | "github";
   text: string;
+  icon?: IconDefinition;
   type?: "button" | "submit" | "reset";
   handleOnClick: React.MouseEventHandler;
   disabled?: boolean;
@@ -12,6 +15,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   text,
+  icon,
   type = "button",
   handleOnClick,
   disabled = false,
@@ -25,6 +29,9 @@ const Button: React.FC<ButtonProps> = ({
       onClick={handleOnClick}
       disabled={disabled}
     >
+      {icon && (
+        <FontAwesomeIcon className={styles.buttonIcon} icon={icon} size="2x" />
+      )}
       {text}
     </button>
   );
