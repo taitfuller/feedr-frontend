@@ -1,0 +1,53 @@
+.label {
+  align-items: center;
+  display: flex;
+}
+
+.checkboxHidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.checkboxStyled {
+  background-color: #ffffff;
+  border: 2px solid var(--iris-100);
+  border-radius: 4px;
+  display: flex;
+  height: 16px;
+  margin-right: 8px;
+  transition: 0.15s;
+  transition-property: background-color, box-shadow;
+  width: 16px;
+}
+
+.checkboxFocused {
+  box-shadow: 0 0 4px 1px var(--iris-80);
+  transition: box-shadow 0.15s;
+}
+
+.checkboxChecked {
+  background-color: var(--iris-100);
+}
+
+.checkIcon {
+  color: #ffffff;
+  opacity: 1;
+  transition: 0.15s;
+  transition-property: opacity, visibility;
+  visibility: visible;
+}
+
+.checkIconHidden {
+  opacity: 0;
+  transition: 0.15s;
+  transition-property: opacity, visibility;
+  visibility: hidden;
+}

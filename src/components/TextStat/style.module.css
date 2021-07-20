@@ -1,0 +1,4 @@
+.textstat {
+  display: flex;
+  flex-direction: column;
+}

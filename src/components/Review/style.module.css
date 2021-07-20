@@ -1,0 +1,20 @@
+.review {
+  align-items: center;
+  display: flex;
+  margin: 8px;
+}
+
+.stars {
+  min-width: fit-content;
+  padding: 12px;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  color: var(--dark-grey);
+  margin-top: 8px;
+}

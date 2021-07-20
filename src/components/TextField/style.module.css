@@ -1,0 +1,34 @@
+.textfield {
+  background-color: var(--light-grey);
+  border: 2px solid var(--light-grey);
+  font-family: "Work Sans", sans-serif;
+  letter-spacing: -0.02em;
+  margin: 0;
+  padding: 12px;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.textfield__small {
+  border-radius: 11px;
+  font-size: 13px;
+  height: 30px;
+  line-height: 15px;
+}
+
+.textfield__large {
+  border-radius: 14px;
+  font-size: 18px;
+  height: 40px;
+  line-height: 21px;
+}
+
+.textfield:focus {
+  border: 2px solid var(--dark-grey);
+  outline: none;
+  transition: 0.3s;
+}
+
+.textfield::placeholder {
+  font-style: italic;
+}

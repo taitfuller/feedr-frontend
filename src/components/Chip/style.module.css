@@ -1,0 +1,18 @@
+.chip {
+  border-radius: 14px;
+  color: #ffffff;
+  display: flex;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px 12px;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.chip__bug {
+  background-color: var(--fuchsia-100);
+}
+
+.chip__feature {
+  background-color: var(--iris-100);
+}
