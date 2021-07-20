@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
+import { useValue } from "react-cosmos/fixture";
 import TextArea from "./index";
 
-const TextAreaFixture = (): JSX.Element => {
-  const [value, setValue] = useState("");
+interface FunctionalTextAreaProps {
+  label?: string;
+  height?: number;
+}
+
+const FunctionalTextArea: React.FC<FunctionalTextAreaProps> = ({
+  label = "",
+  height = 75,
+}) => {
+  const [value, setValue] = useValue<string>("textValue", { defaultValue: "" });
 
   return (
     <TextArea
-      label="What could be the potential root cause?"
+      label={label}
       textValue={value}
       onChangeHandler={setValue}
-      height={75}
+      height={height}
     />
   );
 };
 
-export default TextAreaFixture;
+export default (
+  <FunctionalTextArea
+    label="What could be the potential root cause?"
+    height={75}
+  />
+);

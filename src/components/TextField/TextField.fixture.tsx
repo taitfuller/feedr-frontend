@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useValue } from "react-cosmos/fixture";
 import TextField from "./index";
 
 interface FunctionalTextFieldProps {
@@ -10,7 +11,7 @@ const FunctionalTextField: React.FC<FunctionalTextFieldProps> = ({
   label = "",
   size = "large",
 }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useValue<string>("textValue", { defaultValue: "" });
 
   return (
     <TextField
