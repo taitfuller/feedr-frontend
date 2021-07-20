@@ -11,7 +11,7 @@ interface DropdownContainerProps {
 const DropdownContainer: React.FC<DropdownContainerProps> = ({
   title,
   children,
-}: DropdownContainerProps): JSX.Element => {
+}: DropdownContainerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

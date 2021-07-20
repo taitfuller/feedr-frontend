@@ -5,7 +5,7 @@ interface CardProps {
   children: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ children }: CardProps): JSX.Element => {
+const Card: React.FC<CardProps> = ({ children }: CardProps) => {
   return <div className={styles.card}>{children}</div>;
 };
 

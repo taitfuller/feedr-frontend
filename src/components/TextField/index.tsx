@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import styles from "./style.module.css";
 
 interface TextFieldProps {
@@ -9,7 +9,7 @@ interface TextFieldProps {
   size?: "small" | "large";
 }
 
-const TextField: FC<TextFieldProps> = ({
+const TextField: React.FC<TextFieldProps> = ({
   label = "",
   textValue,
   onChangeHandler,

@@ -11,7 +11,7 @@ const TextStat: React.FC<TextStatProps> = ({
   stat,
   type,
   desc,
-}: TextStatProps): JSX.Element => {
+}: TextStatProps) => {
   let statDisplay = "";
   if (type === "count") {
     // add thousands commas

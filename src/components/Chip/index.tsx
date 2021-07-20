@@ -5,7 +5,7 @@ interface ChipProps {
   type: "bug" | "feature";
 }
 
-const Chip: React.FC<ChipProps> = ({ type }: ChipProps): JSX.Element => {
+const Chip: React.FC<ChipProps> = ({ type }: ChipProps) => {
   const chipTypeStyle = styles[`chip__${type}`];
 
   return <div className={`${styles.chip} ${chipTypeStyle}`}>{type}</div>;

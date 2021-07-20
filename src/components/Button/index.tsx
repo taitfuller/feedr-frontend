@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   type = "button",
   handleOnClick,
   disabled = false,
-}: ButtonProps): JSX.Element => {
+}: ButtonProps) => {
   const buttonTypeStyle = styles[`button__${variant}`];
 
   return (

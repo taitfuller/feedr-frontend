@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import styles from "./style.module.css";
 
 interface TextAreaProps {
@@ -9,7 +9,7 @@ interface TextAreaProps {
   height?: number;
 }
 
-const TextArea: FC<TextAreaProps> = ({
+const TextArea: React.FC<TextAreaProps> = ({
   label = "",
   textValue,
   onChangeHandler,

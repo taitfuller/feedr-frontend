@@ -16,7 +16,7 @@ const Button: React.FC<IconButtonProps> = ({
   type = "button",
   size,
   handleOnClick,
-}: IconButtonProps): JSX.Element => {
+}: IconButtonProps) => {
   return (
     <button className={styles.iconButton} type={type} onClick={handleOnClick}>
       <FontAwesomeIcon icon={icon} size={size} />

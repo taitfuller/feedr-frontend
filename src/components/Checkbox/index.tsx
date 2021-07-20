@@ -13,7 +13,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   checked,
   label,
   onChangeHandler,
-}: CheckboxProps): JSX.Element => {
+}: CheckboxProps) => {
   const [focused, setFocused] = useState(false);
 
   return (
