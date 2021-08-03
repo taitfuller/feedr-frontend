@@ -50,9 +50,7 @@ const DropdownListContainer: React.FC<DropdownListContainerProps> &
       setIsOpen={setIsOpen}
     >
       <div style={{ width: "100%" }}>
-        {React.Children.map(children, (child) => {
-          return child;
-        })}
+        {React.Children.map(children, (child) => child)}
       </div>
     </DropdownContainer>
   );
