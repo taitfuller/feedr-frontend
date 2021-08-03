@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./style.module.css";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,8 +23,16 @@ const DropdownContainer: React.FC<DropdownContainerProps> = ({
   isOpen,
   setIsOpen,
 }: DropdownContainerProps) => {
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, (): void => setIsOpen(false));
+
   return (
-    <div className={styles.dropdown} style={{ width: width && `${width}px` }}>
+    <div
+      ref={ref}
+      className={styles.dropdown}
+      style={{ width: width && `${width}px` }}
+    >
       <button
         className={`${styles.button} ${
           !hideButtonWhenOpen && styles.buttonShowWhenOpen
