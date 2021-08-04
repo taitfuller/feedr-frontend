@@ -18,3 +18,11 @@
   background-color: rgba(0, 0, 0, 0.4);
   transition: 0.1s;
 }
+
+.button__primary {
+  color: var(--iris-100);
+}
+
+.button__secondary {
+  color: black;
+}
