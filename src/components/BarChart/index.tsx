@@ -26,8 +26,8 @@ const BarChart: React.FC<BarChartProps> = ({
   const otherLabelPos = ((featureCount + bugCount) / totalReviews) * 100;
 
   return (
-    <div>
-      <div className={styles.barContainer}>
+    <div className={styles.container}>
+      <div className={styles.bar}>
         <div
           className={`${styles.barFrac} ${styles.barBug}`}
           style={{ width: `${bugWidth}%` }}
@@ -39,14 +39,20 @@ const BarChart: React.FC<BarChartProps> = ({
       </div>
       <div>
         <div className={styles.barLabel} style={{ left: featureLabelPos }}>
-          <span className={styles.percent}>{featureFrac}%</span> feature
-          requests
+          <p>
+            <span className={styles.percent}>{featureFrac}%</span> feature
+            requests
+          </p>
         </div>
         <div className={styles.barLabel} style={{ left: `${bugLabelPos}%` }}>
-          <span className={styles.percent}>{bugFrac}%</span> bug reports
+          <p>
+            <span className={styles.percent}>{bugFrac}%</span> bug reports
+          </p>
         </div>
         <div className={styles.barLabel} style={{ left: `${otherLabelPos}%` }}>
-          <span className={styles.percent}>{otherFrac}%</span> other
+          <p>
+            <span className={styles.percent}>{otherFrac}%</span> other
+          </p>
         </div>
       </div>
     </div>
