@@ -8,7 +8,20 @@ const dummyClick = (): void => {
 };
 
 export default {
-  flag: <IconButton icon={faFlag} size="2x" handleOnClick={dummyClick} />,
-  delete: <IconButton icon={faTrashAlt} size="2x" handleOnClick={dummyClick} />,
-  close: <IconButton icon={faTimes} size="3x" handleOnClick={dummyClick} />,
+  delete: (
+    <IconButton
+      icon={faTrashAlt}
+      size="2x"
+      handleOnClick={dummyClick}
+      variant="primary"
+    />
+  ),
+  close: (
+    <IconButton
+      icon={faTimes}
+      size="3x"
+      handleOnClick={dummyClick}
+      variant="secondary"
+    />
+  ),
 };

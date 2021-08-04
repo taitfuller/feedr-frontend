@@ -13,6 +13,7 @@ const IconToggleFixture: React.FC = () => {
     <IconToggle
       iconActive={fasFlag}
       iconInactive={faFlag}
+      variant="primary"
       size="2x"
       checked={checked}
       onChangeHandler={setChecked}

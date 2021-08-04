@@ -7,6 +7,7 @@ import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 interface IconButtonProps {
   icon: IconDefinition;
   type?: "button" | "submit" | "reset";
+  variant?: "primary" | "secondary";
   size: SizeProp;
   handleOnClick: React.MouseEventHandler;
 }
@@ -14,11 +15,18 @@ interface IconButtonProps {
 const Button: React.FC<IconButtonProps> = ({
   icon,
   type = "button",
+  variant = "primary",
   size,
   handleOnClick,
 }: IconButtonProps) => {
+  const buttonTypeStyle = styles[`button__${variant}`];
+
   return (
-    <button className={styles.iconButton} type={type} onClick={handleOnClick}>
+    <button
+      className={`${styles.iconButton} ${buttonTypeStyle}`}
+      type={type}
+      onClick={handleOnClick}
+    >
       <FontAwesomeIcon icon={icon} size={size} />
     </button>
   );
