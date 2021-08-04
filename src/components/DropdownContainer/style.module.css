@@ -2,14 +2,11 @@
   border-radius: 24px;
   width: min-content;
   height: min-content;
-}
-
-.text {
-  margin-right: 12px;
+  position: relative;
 }
 
 .button {
-  background-color: #ffffff;
+  background-color: white;
   border: none;
   color: var(--iris-100);
   border-radius: 14px;
@@ -18,26 +15,59 @@
   font-size: 13px;
   font-weight: bold;
   height: 40px;
-  padding: 0 24px;
+  padding: 0 16px;
+  margin: 0;
   text-overflow: ellipsis;
   transition: 0.3s;
   white-space: nowrap;
-  width: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonShowWhenOpen {
+  position: relative;
+  z-index: 1;
+}
+
+.buttonItem {
+  color: black;
 }
 
 .button:hover {
   background-color: var(--light-grey);
 }
 
+.dropdownCaret {
+  margin-left: 12px;
+}
+
 .children {
   background-color: #ffffff;
-  border-radius: 24px;
+  border-radius: 16px;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
   display: none;
   font-family: "Work Sans", sans-serif;
   font-size: 13px;
   font-weight: bold;
   position: absolute;
+  top: -5px;
+  padding: 10px;
+}
+
+.childrenNoOverflow {
+  width: calc(100% + 10px);
+  padding-top: 50px;
+}
+
+.childrenLeftOverflow {
+  right: -5px;
+}
+
+.childrenRightOverflow,
+.childrenNoOverflow {
+  left: -5px;
 }
 
 .childrenOpen {
