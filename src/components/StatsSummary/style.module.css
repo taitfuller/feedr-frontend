@@ -1,0 +1,12 @@
+.statsSum {
+  display: flex;
+  flex-direction: row;
+}
+
+.barChartContainer {
+  width: 100%;
+}
+
+.stat {
+  margin-left: 24px;
+}
