@@ -1,6 +1,6 @@
 import React from "react";
 import IconButton from "./index";
-import { faFlag, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const dummyClick = (): void => {
