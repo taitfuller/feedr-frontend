@@ -1,5 +1,5 @@
 import React from "react";
-import { Column, useTable } from "react-table";
+import { Column, useTable, useSortBy } from "react-table";
 
 export type Topic = {
   topic: string;
@@ -46,10 +46,12 @@ const TopicTable: React.FC = () => {
           {
             Header: "New",
             accessor: "counts.new",
+            sortType: "basic",
           },
           {
             Header: "+%",
             accessor: "counts.increase",
+            sortType: "basic",
           },
         ],
       },
@@ -60,13 +62,28 @@ const TopicTable: React.FC = () => {
       {
         Header: "Summary",
         accessor: "summary",
+        disableSortBy: true,
       },
     ],
     []
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<Topic>({ columns, data });
+    useTable<Topic>(
+      {
+        columns,
+        data,
+        initialState: {
+          sortBy: [
+            {
+              id: "counts.new",
+              desc: true,
+            },
+          ],
+        },
+      },
+      useSortBy
+    );
 
   return (
     <table {...getTableProps()}>
@@ -76,11 +93,22 @@ const TopicTable: React.FC = () => {
             headerGroup.getHeaderGroupProps();
           return (
             <tr key={headerGroupKey} {...getHeaderGroupProps}>
-              {headerGroup.headers.map((column) => (
-                <th key={headerGroupKey} {...getHeaderGroupProps}>
-                  {column.render("Header")}
-                </th>
-              ))}
+              {headerGroup.headers.map((column) => {
+                const { key: headerKey, ...getHeaderProps } =
+                  column.getHeaderProps(column.getSortByToggleProps());
+                return (
+                  <th key={headerKey} {...getHeaderProps}>
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
+                  </th>
+                );
+              })}
             </tr>
           );
         })}
