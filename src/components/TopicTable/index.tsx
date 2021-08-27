@@ -1,5 +1,6 @@
 import React from "react";
 import { Column, useTable, useSortBy } from "react-table";
+import styles from "./style.module.css";
 
 export type Topic = {
   topic: string;
@@ -92,12 +93,20 @@ const TopicTable: React.FC = () => {
           const { key: headerGroupKey, ...getHeaderGroupProps } =
             headerGroup.getHeaderGroupProps();
           return (
-            <tr key={headerGroupKey} {...getHeaderGroupProps}>
+            <tr
+              key={headerGroupKey}
+              {...getHeaderGroupProps}
+              className={styles.headerRow}
+            >
               {headerGroup.headers.map((column) => {
                 const { key: headerKey, ...getHeaderProps } =
                   column.getHeaderProps(column.getSortByToggleProps());
                 return (
-                  <th key={headerKey} {...getHeaderProps}>
+                  <th
+                    key={headerKey}
+                    {...getHeaderProps}
+                    className={styles.header}
+                  >
                     {column.render("Header")}
                     <span>
                       {column.isSorted
@@ -122,7 +131,7 @@ const TopicTable: React.FC = () => {
               {row.cells.map((cell) => {
                 const { key: cellKey, ...getCellProps } = cell.getCellProps();
                 return (
-                  <td key={cellKey} {...getCellProps}>
+                  <td key={cellKey} {...getCellProps} className={styles.cell}>
                     {cell.render("Cell")}
                   </td>
                 );

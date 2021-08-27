@@ -1,0 +1,30 @@
+.header {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 12px;
+  text-align: left;
+}
+
+.header:nth-child(2) {
+  font-size: 14px;
+  text-align: center;
+}
+
+.header:nth-child(3) {
+  font-size: 14px;
+  text-align: center;
+}
+
+.cell {
+  padding: 12px;
+}
+
+.cell:nth-child(2) {
+  font-weight: bold;
+  text-align: right;
+}
+
+.cell:nth-child(3) {
+  font-weight: bold;
+  text-align: right;
+}
