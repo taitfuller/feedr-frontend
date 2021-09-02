@@ -1,0 +1,59 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 48px 48px auto 40px;
+  height: 100%;
+}
+
+.heading {
+  display: flex;
+  flex-direction: row;
+  grid-column: 1 / 4;
+  grid-row: 1;
+}
+
+.title {
+  margin-right: 12px;
+}
+
+.stats {
+  display: grid;
+  grid-column: 1 / 4;
+  grid-row: 2;
+}
+
+.stat1 {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.stat2 {
+  grid-column: 2;
+  justify-self: center;
+}
+
+.stat3 {
+  grid-column: 3;
+  justify-self: end;
+}
+
+.reviews {
+  grid-column: 1 / 4;
+  grid-row: 3;
+  margin: 12px 0;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  grid-column: 1 / 4;
+  grid-row: 4;
+}
+
+.btn {
+  flex: 1 auto 0;
+}
+
+.btnLeft {
+  margin-right: 12px;
+}

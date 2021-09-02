@@ -14,11 +14,7 @@ interface ReviewProps {
   date: dayjs.Dayjs;
 }
 
-const TextStat: React.FC<ReviewProps> = ({
-  rating,
-  text,
-  date,
-}: ReviewProps) => {
+const Review: React.FC<ReviewProps> = ({ rating, text, date }: ReviewProps) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
     stars.push(
@@ -37,4 +33,4 @@ const TextStat: React.FC<ReviewProps> = ({
   );
 };
 
-export default TextStat;
+export default Review;
