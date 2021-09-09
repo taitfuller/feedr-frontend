@@ -7,11 +7,12 @@
   font-size: 13px;
   font-weight: bold;
   height: 40px;
+  justify-content: center;
   padding: 0 24px;
   text-overflow: ellipsis;
   transition: 0.3s;
   white-space: nowrap;
-  width: fit-content;
+  width: 100%;
 }
 
 .buttonIcon {

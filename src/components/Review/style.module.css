@@ -1,12 +1,12 @@
 .review {
   align-items: center;
   display: flex;
-  margin: 8px;
+  margin: 12px 0;
 }
 
 .stars {
   min-width: fit-content;
-  padding: 12px;
+  padding: 12px 12px 12px 0;
 }
 
 .textContainer {
@@ -16,5 +16,5 @@
 
 .date {
   color: var(--dark-grey);
-  margin-top: 8px;
+  margin-top: 4px;
 }

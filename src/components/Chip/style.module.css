@@ -4,6 +4,7 @@
   display: flex;
   font-size: 13px;
   font-weight: bold;
+  height: max-content;
   padding: 5px 12px;
   text-transform: uppercase;
   width: fit-content;

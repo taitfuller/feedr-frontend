@@ -40,6 +40,13 @@ h2 {
   margin: 0;
 }
 
+h5 {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
 p {
   font-size: 13px;
   line-height: 15px;
