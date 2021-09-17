@@ -14,7 +14,7 @@ export default (
           reviews: [],
           counts: {
             newReviews: 69,
-            increase: 22,
+            oldReviews: 22,
             averageRating: 5,
           },
         },
@@ -27,7 +27,7 @@ export default (
           reviews: [],
           counts: {
             newReviews: 420,
-            increase: 109,
+            oldReviews: 220,
             averageRating: 4,
           },
         },

@@ -27,7 +27,7 @@ export type Topic = {
 export type TopicSummary = Topic & {
   counts: {
     newReviews: number;
-    increase?: number;
-    averageRating?: number;
+    oldReviews: number;
+    averageRating: number;
   };
 };

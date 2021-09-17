@@ -3,6 +3,7 @@ import { Column, useTable, useSortBy } from "react-table";
 import styles from "./style.module.css";
 import { TopicSummary } from "../../types";
 import Chip from "../Chip";
+import percentageIncrease from "../../util/percentageIncrease";
 
 interface TopicTableProps {
   topics: TopicSummary[];
@@ -27,7 +28,13 @@ const TopicTable: React.FC<TopicTableProps> = ({ topics }: TopicTableProps) => {
           },
           {
             Header: "+%",
-            accessor: "counts.increase",
+            accessor: (row) =>
+              row.counts.oldReviews
+                ? `+${percentageIncrease(
+                    row.counts.newReviews,
+                    row.counts.oldReviews
+                  )}%`
+                : "—",
             sortType: "basic",
           },
         ],
