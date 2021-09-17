@@ -1,52 +1,53 @@
 import React from "react";
 import { Column, useTable, useSortBy } from "react-table";
 import styles from "./style.module.css";
-
-export type Topic = {
-  topic: string;
-  counts: { new: number; increase: number };
-  type: "bugReport" | "featureRequest";
-  summary: string;
-};
+import { TopicSummary } from "../../types";
+import Chip from "../Chip";
 
 const TopicTable: React.FC = () => {
-  const data = React.useMemo<Topic[]>(
+  const data = React.useMemo<TopicSummary[]>(
     () => [
       {
-        topic: "Battery life",
-        counts: {
-          new: 69,
-          increase: 22,
-        },
-        type: "bugReport",
+        _id: "614417bbef1760f1db981dd0",
+        keywords: ["battery", "life"],
         summary: "After installing this app my battery became negative",
+        type: "bugReport",
+        reviews: [],
+        counts: {
+          newReviews: 69,
+          increase: 22,
+          averageRating: 5,
+        },
       },
       {
-        topic: "Dark mode",
-        counts: {
-          new: 420,
-          increase: 109,
-        },
-        type: "featureRequest",
+        _id: "614417bbef1760f1db981dd1",
+        keywords: ["dark", "mode"],
         summary:
           "Light mode sucks. Real developers use dark mode for everything",
+        type: "featureRequest",
+        reviews: [],
+        counts: {
+          newReviews: 420,
+          increase: 109,
+          averageRating: 4,
+        },
       },
     ],
     []
   );
 
-  const columns = React.useMemo<Column<Topic>[]>(
+  const columns = React.useMemo<Column<TopicSummary>[]>(
     () => [
       {
         Header: "Topic",
-        accessor: "topic",
+        accessor: (row) => row.keywords.join(", "),
       },
       {
         Header: "Reviews",
         columns: [
           {
             Header: "New",
-            accessor: "counts.new",
+            accessor: "counts.newReviews",
             sortType: "basic",
           },
           {
@@ -59,6 +60,12 @@ const TopicTable: React.FC = () => {
       {
         Header: "Type",
         accessor: "type",
+        // eslint-disable-next-line react/display-name
+        Cell: ({ value }) => {
+          if (value === "bugReport") return <Chip type={"bug"} />;
+          if (value === "featureRequest") return <Chip type={"feature"} />;
+          return <></>;
+        },
       },
       {
         Header: "Summary",
@@ -70,14 +77,14 @@ const TopicTable: React.FC = () => {
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<Topic>(
+    useTable<TopicSummary>(
       {
         columns,
         data,
         initialState: {
           sortBy: [
             {
-              id: "counts.new",
+              id: "counts.newReviews",
               desc: true,
             },
           ],
