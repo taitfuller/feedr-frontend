@@ -6,9 +6,37 @@ import DetailView from "../../components/DetailView";
 import styles from "./style.module.css";
 import TextField from "../../components/TextField";
 import Menu from "../../components/Menu";
+import { TopicSummary } from "../../types";
 
 const DashboardPage: React.FC = () => {
   const [search, setSearch] = useState("");
+
+  const topics: TopicSummary[] = [
+    {
+      _id: "614417bbef1760f1db981dd0",
+      keywords: ["battery", "life"],
+      summary: "After installing this app my battery became negative",
+      type: "bugReport",
+      reviews: [],
+      counts: {
+        newReviews: 69,
+        increase: 22,
+        averageRating: 5,
+      },
+    },
+    {
+      _id: "614417bbef1760f1db981dd1",
+      keywords: ["dark", "mode"],
+      summary: "Light mode sucks. Real developers use dark mode for everything",
+      type: "featureRequest",
+      reviews: [],
+      counts: {
+        newReviews: 420,
+        increase: 109,
+        averageRating: 4,
+      },
+    },
+  ];
 
   return (
     <div className={styles.grid}>
@@ -47,7 +75,7 @@ const DashboardPage: React.FC = () => {
             onChangeHandler={setSearch}
             label="Search..."
           />
-          <TopicTable />
+          <TopicTable topics={topics} />
         </Card>
       </div>
       <div className={styles.graph}>

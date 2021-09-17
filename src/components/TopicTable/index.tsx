@@ -4,37 +4,12 @@ import styles from "./style.module.css";
 import { TopicSummary } from "../../types";
 import Chip from "../Chip";
 
-const TopicTable: React.FC = () => {
-  const data = React.useMemo<TopicSummary[]>(
-    () => [
-      {
-        _id: "614417bbef1760f1db981dd0",
-        keywords: ["battery", "life"],
-        summary: "After installing this app my battery became negative",
-        type: "bugReport",
-        reviews: [],
-        counts: {
-          newReviews: 69,
-          increase: 22,
-          averageRating: 5,
-        },
-      },
-      {
-        _id: "614417bbef1760f1db981dd1",
-        keywords: ["dark", "mode"],
-        summary:
-          "Light mode sucks. Real developers use dark mode for everything",
-        type: "featureRequest",
-        reviews: [],
-        counts: {
-          newReviews: 420,
-          increase: 109,
-          averageRating: 4,
-        },
-      },
-    ],
-    []
-  );
+interface TopicTableProps {
+  topics: TopicSummary[];
+}
+
+const TopicTable: React.FC<TopicTableProps> = ({ topics }: TopicTableProps) => {
+  const memorisedTopics = React.useMemo(() => topics, [topics]);
 
   const columns = React.useMemo<Column<TopicSummary>[]>(
     () => [
@@ -80,7 +55,7 @@ const TopicTable: React.FC = () => {
     useTable<TopicSummary>(
       {
         columns,
-        data,
+        data: memorisedTopics,
         initialState: {
           sortBy: [
             {
