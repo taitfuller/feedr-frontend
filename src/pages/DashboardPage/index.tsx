@@ -14,6 +14,7 @@ const DashboardPage: React.FC = () => {
 
   const [topics, setTopics] = useState<TopicSummary[]>([]);
   const [summary, setSummary] = useState<ReviewSummary>();
+  const [selectedTopic, setSelectedTopic] = useState<TopicSummary>();
 
   const [from] = useState(new Date(2020, 8, 15));
   const [to] = useState(new Date(2020, 9));
@@ -62,7 +63,11 @@ const DashboardPage: React.FC = () => {
             onChangeHandler={setSearch}
             label="Search..."
           />
-          <TopicTable topics={topics} />
+          <TopicTable
+            topics={topics}
+            selected={selectedTopic}
+            onSelect={setSelectedTopic}
+          />
         </Card>
       </div>
       <div className={styles.graph}>
@@ -72,7 +77,7 @@ const DashboardPage: React.FC = () => {
       </div>
       <div className={styles.detail}>
         <Card>
-          <DetailView />
+          <DetailView topic={selectedTopic} />
         </Card>
       </div>
     </div>

@@ -15,12 +15,12 @@ const TextStat: React.FC<TextStatProps> = ({
   let statDisplay = "";
   if (type === "count") {
     // add thousands commas
-    statDisplay = stat?.toLocaleString() ?? "-";
+    statDisplay = stat?.toLocaleString() ?? "—";
   } else if (type === "percentage") {
-    statDisplay = "+" + (stat ?? "-") + "%";
+    statDisplay = "+" + (stat ?? "—") + "%";
   } else if (type === "rating") {
     // round to 1 dp
-    statDisplay = stat?.toFixed(1) ?? "-";
+    statDisplay = stat?.toFixed(1) ?? "—";
   }
 
   return (

@@ -7,9 +7,15 @@ import percentageIncrease from "../../util/percentageIncrease";
 
 interface TopicTableProps {
   topics: TopicSummary[];
+  selected: TopicSummary | undefined;
+  onSelect: (topic: TopicSummary) => void;
 }
 
-const TopicTable: React.FC<TopicTableProps> = ({ topics }: TopicTableProps) => {
+const TopicTable: React.FC<TopicTableProps> = ({
+  topics,
+  selected,
+  onSelect,
+}: TopicTableProps) => {
   const memorisedTopics = React.useMemo(() => topics, [topics]);
 
   const columns = React.useMemo<Column<TopicSummary>[]>(
@@ -43,11 +49,7 @@ const TopicTable: React.FC<TopicTableProps> = ({ topics }: TopicTableProps) => {
         Header: "Type",
         accessor: "type",
         // eslint-disable-next-line react/display-name
-        Cell: ({ value }) => {
-          if (value === "bugReport") return <Chip type={"bug"} />;
-          if (value === "featureRequest") return <Chip type={"feature"} />;
-          return <></>;
-        },
+        Cell: ({ value }) => <Chip type={value} />,
       },
       {
         Header: "Summary",
@@ -116,7 +118,15 @@ const TopicTable: React.FC<TopicTableProps> = ({ topics }: TopicTableProps) => {
           prepareRow(row);
           const { key: rowKey, ...getRowProps } = row.getRowProps();
           return (
-            <tr key={rowKey} {...getRowProps}>
+            <tr
+              key={rowKey}
+              {...getRowProps}
+              className={styles.row}
+              style={
+                row.original === selected ? { backgroundColor: "pink" } : {}
+              }
+              onClick={() => onSelect(row.original)}
+            >
               {row.cells.map((cell) => {
                 const { key: cellKey, ...getCellProps } = cell.getCellProps();
                 return (

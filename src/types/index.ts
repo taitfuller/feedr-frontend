@@ -12,6 +12,7 @@ export type Review = {
   date: Date;
   platform: "iOS" | "Android";
   type: "bugReport" | "featureRequest" | "other";
+  rating: number;
   text: string;
   flag: boolean;
 };

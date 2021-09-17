@@ -15,6 +15,10 @@
   text-align: center;
 }
 
+.row {
+  cursor: pointer;
+}
+
 .cell {
   font-size: 13px;
   padding: 12px;
