@@ -2,26 +2,21 @@ import React from "react";
 import BarChart from "../BarChart";
 import TextStat from "../TextStat";
 import styles from "./style.module.css";
+import { ReviewSummary } from "../../types";
+import percentageIncrease from "../../util/percentageIncrease";
 
-interface StatsSummaryProps {
-  featureRequests: number;
-  bugReports: number;
-  other: number;
-  reviews: number;
-  totalIncrease: number;
-  averageRating: number;
-  topics: number;
-}
+type StatsSummaryProps = ReviewSummary;
 
-const StatsSummary: React.FC<StatsSummaryProps> = ({
+const StatsSummary: React.FC<ReviewSummary> = ({
   featureRequests,
   bugReports,
   other,
-  reviews,
-  totalIncrease,
-  averageRating,
+  oldReviews,
   topics,
+  averageRating,
 }: StatsSummaryProps) => {
+  const newReviews = featureRequests + bugReports + other;
+
   return (
     <div className={styles.statsSum}>
       <div className={styles.barChartContainer}>
@@ -32,11 +27,13 @@ const StatsSummary: React.FC<StatsSummaryProps> = ({
         />
       </div>
       <div className={styles.stat}>
-        <TextStat stat={reviews} type={"count"} desc={"reviews"} />
+        <TextStat stat={newReviews} type={"count"} desc={"reviews"} />
       </div>
       <div className={styles.stat}>
         <TextStat
-          stat={totalIncrease}
+          stat={
+            oldReviews ? percentageIncrease(newReviews, oldReviews) : undefined
+          }
           type={"percentage"}
           desc={"total reviews"}
         />

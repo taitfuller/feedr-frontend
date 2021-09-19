@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/Card";
 import StatsSummary from "../../components/StatsSummary";
 import TopicTable from "../../components/TopicTable";
@@ -6,9 +6,35 @@ import DetailView from "../../components/DetailView";
 import styles from "./style.module.css";
 import TextField from "../../components/TextField";
 import Menu from "../../components/Menu";
+import { ReviewSummary, TopicSummary } from "../../types";
+import axios from "axios";
 
 const DashboardPage: React.FC = () => {
   const [search, setSearch] = useState("");
+
+  const [topics, setTopics] = useState<TopicSummary[]>([]);
+  const [summary, setSummary] = useState<ReviewSummary>();
+  const [selectedTopic, setSelectedTopic] = useState<TopicSummary>();
+
+  const [from] = useState(new Date(2020, 8, 15));
+  const [to] = useState(new Date(2020, 9));
+  const [platforms] = useState(["iOS", "Android"]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get<TopicSummary[]>("/api/topic", {
+        params: { from, to, platform: platforms },
+      });
+      setTopics(response.data);
+    })();
+
+    (async () => {
+      const response = await axios.get<ReviewSummary>("/api/review/summary", {
+        params: { from, to, platform: platforms },
+      });
+      setSummary(response.data);
+    })();
+  }, [from, to, platforms]);
 
   return (
     <div className={styles.grid}>
@@ -28,17 +54,7 @@ const DashboardPage: React.FC = () => {
         </div>
       </div>
       <div className={styles.stats}>
-        <Card>
-          <StatsSummary
-            featureRequests={769}
-            bugReports={670}
-            other={395}
-            reviews={1834}
-            totalIncrease={18}
-            averageRating={4.1}
-            topics={13}
-          />
-        </Card>
+        <Card>{summary && <StatsSummary {...summary} />}</Card>
       </div>
       <div className={styles.table}>
         <Card>
@@ -47,7 +63,11 @@ const DashboardPage: React.FC = () => {
             onChangeHandler={setSearch}
             label="Search..."
           />
-          <TopicTable />
+          <TopicTable
+            topics={topics}
+            selected={selectedTopic}
+            onSelect={setSelectedTopic}
+          />
         </Card>
       </div>
       <div className={styles.graph}>
@@ -57,7 +77,7 @@ const DashboardPage: React.FC = () => {
       </div>
       <div className={styles.detail}>
         <Card>
-          <DetailView />
+          <DetailView topic={selectedTopic} />
         </Card>
       </div>
     </div>

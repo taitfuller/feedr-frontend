@@ -10,10 +10,10 @@
   width: fit-content;
 }
 
-.chip__bug {
+.chip__bugReport {
   background-color: var(--fuchsia-100);
 }
 
-.chip__feature {
+.chip__featureRequest {
   background-color: var(--iris-100);
 }
