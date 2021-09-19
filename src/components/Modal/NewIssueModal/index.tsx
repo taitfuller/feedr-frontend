@@ -72,7 +72,7 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
               <span className={styles.title}>
                 <h2>&quot;battery&quot;</h2>
               </span>
-              <Chip type="bug" />
+              <Chip type="bugReport" />
             </div>
             <div className={styles.stats}>
               <div className={styles.stat1}>
