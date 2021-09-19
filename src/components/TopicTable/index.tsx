@@ -1,57 +1,46 @@
 import React from "react";
 import { Column, useTable, useSortBy } from "react-table";
 import styles from "./style.module.css";
+import { TopicSummary } from "../../types";
+import Chip from "../Chip";
+import percentageIncrease from "../../util/percentageIncrease";
 
-export type Topic = {
-  topic: string;
-  counts: { new: number; increase: number };
-  type: "bugReport" | "featureRequest";
-  summary: string;
-};
+interface TopicTableProps {
+  topics: TopicSummary[];
+  selected: TopicSummary | undefined;
+  onSelect: (topic: TopicSummary) => void;
+}
 
-const TopicTable: React.FC = () => {
-  const data = React.useMemo<Topic[]>(
-    () => [
-      {
-        topic: "Battery life",
-        counts: {
-          new: 69,
-          increase: 22,
-        },
-        type: "bugReport",
-        summary: "After installing this app my battery became negative",
-      },
-      {
-        topic: "Dark mode",
-        counts: {
-          new: 420,
-          increase: 109,
-        },
-        type: "featureRequest",
-        summary:
-          "Light mode sucks. Real developers use dark mode for everything",
-      },
-    ],
-    []
-  );
+const TopicTable: React.FC<TopicTableProps> = ({
+  topics,
+  selected,
+  onSelect,
+}: TopicTableProps) => {
+  const memorisedTopics = React.useMemo(() => topics, [topics]);
 
-  const columns = React.useMemo<Column<Topic>[]>(
+  const columns = React.useMemo<Column<TopicSummary>[]>(
     () => [
       {
         Header: "Topic",
-        accessor: "topic",
+        accessor: (row) => row.keywords.join(", "),
       },
       {
         Header: "Reviews",
         columns: [
           {
             Header: "New",
-            accessor: "counts.new",
+            accessor: "counts.newReviews",
             sortType: "basic",
           },
           {
             Header: "+%",
-            accessor: "counts.increase",
+            accessor: (row) =>
+              row.counts.oldReviews
+                ? `+${percentageIncrease(
+                    row.counts.newReviews,
+                    row.counts.oldReviews
+                  )}%`
+                : "—",
             sortType: "basic",
           },
         ],
@@ -59,6 +48,8 @@ const TopicTable: React.FC = () => {
       {
         Header: "Type",
         accessor: "type",
+        // eslint-disable-next-line react/display-name
+        Cell: ({ value }) => <Chip type={value} />,
       },
       {
         Header: "Summary",
@@ -70,14 +61,14 @@ const TopicTable: React.FC = () => {
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<Topic>(
+    useTable<TopicSummary>(
       {
         columns,
-        data,
+        data: memorisedTopics,
         initialState: {
           sortBy: [
             {
-              id: "counts.new",
+              id: "counts.newReviews",
               desc: true,
             },
           ],
@@ -127,7 +118,15 @@ const TopicTable: React.FC = () => {
           prepareRow(row);
           const { key: rowKey, ...getRowProps } = row.getRowProps();
           return (
-            <tr key={rowKey} {...getRowProps}>
+            <tr
+              key={rowKey}
+              {...getRowProps}
+              className={styles.row}
+              style={
+                row.original === selected ? { backgroundColor: "pink" } : {}
+              }
+              onClick={() => onSelect(row.original)}
+            >
               {row.cells.map((cell) => {
                 const { key: cellKey, ...getCellProps } = cell.getCellProps();
                 return (
