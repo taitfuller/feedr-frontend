@@ -18,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({
   children,
 }: ModalProps) => {
   const modal = (
-    <>
+    <div className={styles.container}>
       <div className={styles.backdrop} />
       <div className={styles.modal}>
         <div className={styles.heading}>
@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({
         </div>
         {children}
       </div>
-    </>
+    </div>
   );
   return show ? ReactDOM.createPortal(modal, document.body) : null;
 };
