@@ -20,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({
   const modal = (
     <div className={styles.container}>
       <div className={styles.backdrop} />
-      <div className={styles.modal}>
+      <div className={styles.modal} style={{ height: `623px` }}>
         <div className={styles.heading}>
           <h1>{heading}</h1>
           <IconButton

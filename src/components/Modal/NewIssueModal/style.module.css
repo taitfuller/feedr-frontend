@@ -1,15 +1,19 @@
 .container {
   display: flex;
   flex-direction: row;
+  max-height: 100%;
 }
 
-.half {
+.halfLeft {
   flex-grow: 1;
   max-width: 50%;
 }
 
-.divider {
-  width: 24px;
+.halfRight {
+  margin-left: 24px;
+  flex-grow: 1;
+  max-width: 50%;
+  max-height: 511px;
 }
 
 .section {

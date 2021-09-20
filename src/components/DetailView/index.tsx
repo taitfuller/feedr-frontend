@@ -12,9 +12,13 @@ import NewIssueModal from "../Modal/NewIssueModal";
 
 interface DetailViewProps {
   topic: TopicSummary | undefined;
+  showButtons?: boolean;
 }
 
-const DetailView: React.FC<DetailViewProps> = ({ topic }: DetailViewProps) => {
+const DetailView: React.FC<DetailViewProps> = ({
+  topic,
+  showButtons = true,
+}: DetailViewProps) => {
   const [showNew, setShowNew] = useState(false);
 
   if (!topic) return <>Topic Undefined - heh</>;
@@ -69,25 +73,31 @@ const DetailView: React.FC<DetailViewProps> = ({ topic }: DetailViewProps) => {
             />
           ))}
         </div>
-        <div className={styles.buttons}>
-          <div className={`${styles.btn} ${styles.btnLeft}`}>
-            <Button
-              text="New issue"
-              icon={faGithub}
-              handleOnClick={() => setShowNew(true)}
-            />
-          </div>
+        {showButtons && (
+          <div className={styles.buttons}>
+            <div className={`${styles.btn} ${styles.btnLeft}`}>
+              <Button
+                text="New issue"
+                icon={faGithub}
+                handleOnClick={() => setShowNew(true)}
+              />
+            </div>
 
-          <div className={styles.btn}>
-            <Button
-              text="View all reviews"
-              variant="secondary"
-              handleOnClick={() => console.log("View all reviews")}
-            />
+            <div className={styles.btn}>
+              <Button
+                text="View all reviews"
+                variant="secondary"
+                handleOnClick={() => console.log("View all reviews")}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
-      <NewIssueModal show={showNew} onClose={() => setShowNew(false)} />
+      <NewIssueModal
+        show={showNew}
+        onClose={() => setShowNew(false)}
+        topic={topic}
+      />
     </>
   );
 };

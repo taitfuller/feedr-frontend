@@ -3,23 +3,20 @@ import Modal from "../index";
 import TextField from "../../TextField";
 import TextArea from "../../TextArea";
 import styles from "./style.module.css";
-import Chip from "../../Chip";
-import TextStat from "../../TextStat";
-import Review from "../../Review";
-import dayjs from "dayjs";
 import Button from "../../Button";
+import DetailView from "../../DetailView";
+import { TopicSummary } from "../../../types";
 
 interface NewIssueModalProps {
   show: boolean;
   onClose: () => void;
+  topic: TopicSummary | undefined;
 }
-
-const midReview =
-  "This is filler text that will hopefully be replaced by something that makes sense.";
 
 const NewIssueModal: React.FC<NewIssueModalProps> = ({
   show,
   onClose,
+  topic,
 }: NewIssueModalProps) => {
   const [title, setTitle] = useState("");
   const [role, setRole] = useState("");
@@ -31,7 +28,7 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
   return (
     <Modal show={show} onClose={onClose} heading="Create new issue">
       <div className={styles.container}>
-        <div className={styles.half}>
+        <div className={styles.halfLeft}>
           <div className={styles.section}>
             <h5>Title</h5>
             <TextField textValue={title} onChangeHandler={setTitle} />
@@ -59,65 +56,13 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
 
           <Button
             text="Submit new issue"
-            handleOnClick={() => console.log()}
+            handleOnClick={() => onClose()}
             variant="primary"
           />
         </div>
 
-        <div className={styles.divider} />
-
-        <div className={styles.half}>
-          <div className={styles.grid}>
-            <div className={styles.heading}>
-              <span className={styles.title}>
-                <h2>&quot;battery&quot;</h2>
-              </span>
-              <Chip type="bugReport" />
-            </div>
-            <div className={styles.stats}>
-              <div className={styles.stat1}>
-                <TextStat stat={69} type="count" desc="new reviews" />
-              </div>
-              <div className={styles.stat2}>
-                <TextStat stat={42} type="percentage" desc="total reviews" />
-              </div>
-              <div className={styles.stat3}>
-                <TextStat stat={4.2} type="rating" desc="average rating" />
-              </div>
-            </div>
-          </div>
-
-          <h2>Contributing reviews</h2>
-          <Review
-            rating={4}
-            date={dayjs().subtract(9, "hour")}
-            text={midReview}
-          />
-          <Review
-            rating={5}
-            date={dayjs().subtract(2, "day")}
-            text={midReview}
-          />
-          <Review
-            rating={5}
-            date={dayjs().subtract(3, "day")}
-            text={midReview}
-          />
-          <Review
-            rating={4}
-            date={dayjs().subtract(4, "day")}
-            text={midReview}
-          />
-          <Review
-            rating={3}
-            date={dayjs().subtract(5, "day")}
-            text={midReview}
-          />
-          <Review
-            rating={3}
-            date={dayjs().subtract(5, "day")}
-            text={midReview}
-          />
+        <div className={styles.halfRight}>
+          <DetailView topic={topic} showButtons={false} />
         </div>
       </div>
     </Modal>

@@ -1,7 +1,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 48px 48px auto 40px;
+  grid-template-rows: 48px 48px 1fr auto;
   height: 100%;
 }
 
@@ -40,7 +40,8 @@
 .reviews {
   grid-column: 1 / 4;
   grid-row: 3;
-  margin: 12px 0;
+  margin: 12px 0 0 0;
+  overflow-y: auto;
 }
 
 .buttons {
@@ -48,6 +49,7 @@
   flex-direction: row;
   grid-column: 1 / 4;
   grid-row: 4;
+  margin-top: 12px;
 }
 
 .btn {
