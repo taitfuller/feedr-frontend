@@ -18,18 +18,21 @@ const Modal: React.FC<ModalProps> = ({
   children,
 }: ModalProps) => {
   const modal = (
-    <div className={styles.modal}>
-      <div className={styles.heading}>
-        <h1>{heading}</h1>
-        <IconButton
-          icon={faTimes}
-          size="3x"
-          handleOnClick={onClose}
-          variant="secondary"
-        />
+    <>
+      <div className={styles.backdrop} />
+      <div className={styles.modal}>
+        <div className={styles.heading}>
+          <h1>{heading}</h1>
+          <IconButton
+            icon={faTimes}
+            size="3x"
+            handleOnClick={onClose}
+            variant="secondary"
+          />
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
+    </>
   );
   return show ? ReactDOM.createPortal(modal, document.body) : null;
 };
