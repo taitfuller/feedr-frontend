@@ -9,9 +9,11 @@ import Menu from "../../components/Menu";
 import { ReviewSummary, TopicSummary } from "../../types";
 import axios from "axios";
 import useLocalStorage from "react-use-localstorage";
+import { useHistory } from "react-router-dom";
 
 const DashboardPage: React.FC = () => {
-  const [token] = useLocalStorage("token");
+  const [token, setToken] = useLocalStorage("token");
+  const history = useHistory();
 
   const [search, setSearch] = useState("");
 
@@ -32,22 +34,30 @@ const DashboardPage: React.FC = () => {
     });
 
     (async () => {
-      const response = await axiosInstance.get<TopicSummary[]>("/api/topic", {
-        params: { from, to, platform: platforms },
-      });
-      setTopics(response.data);
+      try {
+        const response = await axiosInstance.get<TopicSummary[]>("/api/topic", {
+          params: { from, to, platform: platforms },
+        });
+        setTopics(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
     })();
 
     (async () => {
-      const response = await axiosInstance.get<ReviewSummary>(
-        "/api/review/summary",
-        {
-          params: { from, to, platform: platforms },
-        }
-      );
-      setSummary(response.data);
+      try {
+        const response = await axiosInstance.get<ReviewSummary>(
+          "/api/review/summary",
+          {
+            params: { from, to, platform: platforms },
+          }
+        );
+        setSummary(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
     })();
-  }, [from, to, platforms, token]);
+  }, [from, to, platforms, token, history]);
 
   return (
     <div className={styles.grid}>
@@ -60,7 +70,12 @@ const DashboardPage: React.FC = () => {
             <Menu.Item handleOnClick={() => console.log("Click Settings!")}>
               Settings
             </Menu.Item>
-            <Menu.Item handleOnClick={() => console.log("Click Log Out!")}>
+            <Menu.Item
+              handleOnClick={() => {
+                setToken("");
+                history.replace("/login");
+              }}
+            >
               Log Out
             </Menu.Item>
           </Menu>
