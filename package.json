@@ -71,5 +71,10 @@
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix",
     "*.{ts,tsx,css,json}": "prettier --write"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!react-use-localstorage)"
+    ]
   }
 }
