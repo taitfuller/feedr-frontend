@@ -1,13 +1,13 @@
-export type ReviewSummary = {
+export interface ReviewSummary {
   featureRequests: number;
   bugReports: number;
   other: number;
   oldReviews: number;
   topics: number;
   averageRating: number;
-};
+}
 
-export type Review = {
+export interface Review {
   _id: string;
   date: Date;
   platform: "iOS" | "Android";
@@ -15,20 +15,26 @@ export type Review = {
   rating: number;
   text: string;
   flag: boolean;
-};
+}
 
-export type Topic = {
+export interface Topic {
   _id: string;
   keywords: string[];
   summary: string;
   type: "bugReport" | "featureRequest";
   reviews: Review[];
-};
+}
 
-export type TopicSummary = Topic & {
+export interface TopicSummary extends Topic {
   counts: {
     newReviews: number;
     oldReviews: number;
     averageRating: number;
   };
+}
+
+export type User = {
+  _id: string;
+  githubId: number;
+  displayName: string;
 };

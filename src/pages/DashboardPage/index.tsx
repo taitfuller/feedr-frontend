@@ -6,7 +6,7 @@ import DetailView from "../../components/DetailView";
 import styles from "./style.module.css";
 import TextField from "../../components/TextField";
 import Menu from "../../components/Menu";
-import { ReviewSummary, TopicSummary } from "../../types";
+import { ReviewSummary, TopicSummary, User } from "../../types";
 import axios from "axios";
 import useLocalStorage from "react-use-localstorage";
 import { useHistory } from "react-router-dom";
@@ -20,6 +20,7 @@ const DashboardPage: React.FC = () => {
   const [topics, setTopics] = useState<TopicSummary[]>([]);
   const [summary, setSummary] = useState<ReviewSummary>();
   const [selectedTopic, setSelectedTopic] = useState<TopicSummary>();
+  const [user, setUser] = useState<User>();
 
   const [from] = useState(new Date(2020, 8, 15));
   const [to] = useState(new Date(2020, 9));
@@ -57,6 +58,15 @@ const DashboardPage: React.FC = () => {
         if (error.response.status === 401) history.replace("/login");
       }
     })();
+
+    (async () => {
+      try {
+        const response = await axiosInstance.get<User>("/api/user");
+        setUser(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
+    })();
   }, [from, to, platforms, token, history]);
 
   return (
@@ -66,7 +76,7 @@ const DashboardPage: React.FC = () => {
           <h1>Viewing reviews from the past week</h1>
         </div>
         <div>
-          <Menu title="Logged in as taitfuller" width={210}>
+          <Menu title={`Logged in as ${user?.displayName}`} width={210}>
             <Menu.Item handleOnClick={() => console.log("Click Settings!")}>
               Settings
             </Menu.Item>
