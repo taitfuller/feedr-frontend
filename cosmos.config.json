@@ -4,5 +4,5 @@
   "webpack": {
     "configPath": "react-scripts/config/webpack.config"
   },
-  "globalImports": ["./src/index.css"]
+  "globalImports": ["./src/index.css", "./src/App/App.css"]
 }
