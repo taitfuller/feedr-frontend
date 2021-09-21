@@ -8,8 +8,11 @@ import TextField from "../../components/TextField";
 import Menu from "../../components/Menu";
 import { ReviewSummary, TopicSummary } from "../../types";
 import axios from "axios";
+import useLocalStorage from "react-use-localstorage";
 
 const DashboardPage: React.FC = () => {
+  const [token] = useLocalStorage("token");
+
   const [search, setSearch] = useState("");
 
   const [topics, setTopics] = useState<TopicSummary[]>([]);
@@ -21,20 +24,30 @@ const DashboardPage: React.FC = () => {
   const [platforms] = useState(["iOS", "Android"]);
 
   useEffect(() => {
+    const axiosInstance = axios.create({
+      headers: {
+        "Content-type": "Application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     (async () => {
-      const response = await axios.get<TopicSummary[]>("/api/topic", {
+      const response = await axiosInstance.get<TopicSummary[]>("/api/topic", {
         params: { from, to, platform: platforms },
       });
       setTopics(response.data);
     })();
 
     (async () => {
-      const response = await axios.get<ReviewSummary>("/api/review/summary", {
-        params: { from, to, platform: platforms },
-      });
+      const response = await axiosInstance.get<ReviewSummary>(
+        "/api/review/summary",
+        {
+          params: { from, to, platform: platforms },
+        }
+      );
       setSummary(response.data);
     })();
-  }, [from, to, platforms]);
+  }, [from, to, platforms, token]);
 
   return (
     <div className={styles.grid}>
