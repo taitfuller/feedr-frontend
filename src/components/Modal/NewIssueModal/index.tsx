@@ -28,6 +28,11 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
   const [rootCause, setRootCause] = useState("");
   const [nextSteps, setNextSteps] = useState("");
 
+  const dynamicPrompt =
+    topic?.type == "bugReport"
+      ? "What could be the suspected root cause?"
+      : "What value would be added by this feature?";
+
   const clearState = useCallback(() => {
     setTitle("");
     setRole("");
@@ -42,7 +47,7 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
 **As a** ${role}
 **I want to** ${action}
 **So that** ${rationale}\n
-## What could be the suspected root cause?\n
+## ${dynamicPrompt}\n
 ${rootCause}\n
 ## What action needs to be taken?\n
 ${nextSteps}`,
@@ -91,11 +96,7 @@ ${nextSteps}`,
             <TextArea
               textValue={rootCause}
               onChangeHandler={setRootCause}
-              label={
-                topic?.type == "bugReport"
-                  ? "What could be the suspected root cause?"
-                  : "What value would be added by this feature?"
-              }
+              label={dynamicPrompt}
             />
           </div>
 
