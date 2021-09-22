@@ -9,6 +9,7 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { TopicSummary } from "../../types";
 import percentageIncrease from "../../util/percentageIncrease";
 import NewIssueModal from "../Modal/NewIssueModal";
+import ViewAllModal from "../Modal/ViewAllModal";
 
 interface DetailViewProps {
   topic: TopicSummary | undefined;
@@ -20,6 +21,7 @@ const DetailView: React.FC<DetailViewProps> = ({
   showButtons = true,
 }: DetailViewProps) => {
   const [showNew, setShowNew] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   if (!topic) return <>Topic Undefined - heh</>;
 
@@ -87,7 +89,7 @@ const DetailView: React.FC<DetailViewProps> = ({
               <Button
                 text="View all reviews"
                 variant="secondary"
-                handleOnClick={() => console.log("View all reviews")}
+                handleOnClick={() => setShowAll(true)}
               />
             </div>
           </div>
@@ -96,6 +98,11 @@ const DetailView: React.FC<DetailViewProps> = ({
       <NewIssueModal
         show={showNew}
         onClose={() => setShowNew(false)}
+        topic={topic}
+      />
+      <ViewAllModal
+        show={showAll}
+        onClose={() => setShowAll(false)}
         topic={topic}
       />
     </>

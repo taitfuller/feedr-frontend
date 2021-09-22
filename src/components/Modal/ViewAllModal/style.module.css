@@ -1,0 +1,16 @@
+.stats {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  margin-bottom: 16px;
+}
+
+.reviewContainer {
+  overflow-y: auto;
+}
+
+.review {
+  display: grid;
+  grid-template-columns: 1fr 48px 48px;
+}
