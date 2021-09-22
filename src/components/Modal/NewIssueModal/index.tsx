@@ -30,7 +30,7 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
       <div className={styles.container}>
         <div className={styles.halfLeft}>
           <div className={styles.section}>
-            <h5>Title</h5>
+            <h5 style={{ marginBottom: "8px" }}>Title</h5>
             <TextField textValue={title} onChangeHandler={setTitle} />
           </div>
 
@@ -57,17 +57,23 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
           </div>
 
           <div className={styles.section}>
-            <h5>
-              {topic?.type == "bugReport"
-                ? "What could be the suspected root cause?"
-                : "What value would be added by this feature?"}
-            </h5>
-            <TextArea textValue={rootCause} onChangeHandler={setRootCause} />
+            <TextArea
+              textValue={rootCause}
+              onChangeHandler={setRootCause}
+              label={
+                topic?.type == "bugReport"
+                  ? "What could be the suspected root cause?"
+                  : "What value would be added by this feature?"
+              }
+            />
           </div>
 
           <div className={styles.section}>
-            <h5>What action needs to be taken?</h5>
-            <TextArea textValue={nextSteps} onChangeHandler={setNextSteps} />
+            <TextArea
+              textValue={nextSteps}
+              onChangeHandler={setNextSteps}
+              label="What action needs to be taken?"
+            />
           </div>
 
           <Button
