@@ -1,3 +1,4 @@
 *.css
 *.svg
 src/types/*.d.ts
+src/setupProxy.js
