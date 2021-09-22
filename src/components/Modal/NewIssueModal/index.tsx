@@ -78,7 +78,7 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
         </div>
 
         <div className={styles.halfRight}>
-          <DetailView topic={topic} showButtons={false} />
+          <DetailView topic={topic} inDashboard={false} />
         </div>
       </div>
     </Modal>

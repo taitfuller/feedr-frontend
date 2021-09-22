@@ -5,25 +5,30 @@ import Button from "../Button";
 import Chip from "../Chip";
 import Review from "../Review";
 import TextStat from "../TextStat";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { TopicSummary } from "../../types";
 import percentageIncrease from "../../util/percentageIncrease";
 import NewIssueModal from "../Modal/NewIssueModal";
 import ViewAllModal from "../Modal/ViewAllModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { TopicSummary } from "../../types";
+import { faFlag } from "@fortawesome/free-solid-svg-icons";
 
 interface DetailViewProps {
   topic: TopicSummary | undefined;
-  showButtons?: boolean;
+  inDashboard?: boolean;
 }
 
 const DetailView: React.FC<DetailViewProps> = ({
   topic,
-  showButtons = true,
+  inDashboard = true,
 }: DetailViewProps) => {
   const [showNew, setShowNew] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
   if (!topic) return <>Topic Undefined - heh</>;
+
+  const flaggedReviews = topic.reviews.filter((review) => review.flag);
+  const flaggedPresent = flaggedReviews.length != 0;
 
   return (
     <>
@@ -66,16 +71,35 @@ const DetailView: React.FC<DetailViewProps> = ({
         </div>
         <div className={styles.reviews}>
           <h5>Contributing reviews</h5>
-          {topic.reviews.map((review) => (
-            <Review
-              key={review._id}
-              rating={review.rating}
-              date={dayjs(review.date).subtract(9, "hour")}
-              text={review.text}
-            />
-          ))}
+          {flaggedPresent && (
+            <div className={!inDashboard ? styles.flagged : ""}>
+              {!inDashboard && (
+                <div className={styles.flagIndicator}>
+                  <FontAwesomeIcon icon={faFlag} color="#ffffff" size="xs" />
+                </div>
+              )}
+              {flaggedReviews.map((review) => (
+                <Review
+                  key={review._id}
+                  rating={review.rating}
+                  date={dayjs(review.date).subtract(9, "hour")}
+                  text={review.text}
+                />
+              ))}
+            </div>
+          )}
+          {topic.reviews
+            .filter((review) => !review.flag)
+            .map((review) => (
+              <Review
+                key={review._id}
+                rating={review.rating}
+                date={dayjs(review.date).subtract(9, "hour")}
+                text={review.text}
+              />
+            ))}
         </div>
-        {showButtons && (
+        {inDashboard && (
           <div className={styles.buttons}>
             <div className={`${styles.btn} ${styles.btnLeft}`}>
               <Button

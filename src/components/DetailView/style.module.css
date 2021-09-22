@@ -44,6 +44,25 @@
   overflow-y: auto;
 }
 
+.flagged {
+  border: 2px solid var(--iris-100);
+  border-radius: 14px;
+  margin-top: 12px;
+}
+
+.flagIndicator {
+  align-items: center;
+  background-color: var(--iris-100);
+  border-radius: 50%;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  margin: -13px -13px 0 0;
+  right: 26px;
+  position: absolute;
+  width: 24px;
+}
+
 .buttons {
   display: flex;
   flex-direction: row;
