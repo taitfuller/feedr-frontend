@@ -51,7 +51,7 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
 ${rootCause}\n
 ## What action needs to be taken?\n
 ${nextSteps}`,
-    [role, action, rationale, rootCause, nextSteps]
+    [role, action, rationale, dynamicPrompt, rootCause, nextSteps]
   );
 
   return (
