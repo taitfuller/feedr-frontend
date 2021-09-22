@@ -7,7 +7,7 @@ import Chip from "../../Chip";
 import Review from "../../Review";
 import IconButton from "../../IconButton";
 import { faFlag, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-// import { faFlag as faFlagSelected } from "@fortawesome/free-solid-svg-icons";
+import { faFlag as faFlagged } from "@fortawesome/free-solid-svg-icons";
 import styles from "./style.module.css";
 import dayjs from "dayjs";
 
@@ -69,7 +69,7 @@ const ViewAllModal: React.FC<ViewAllModalProps> = ({
               text={review.text}
             />
             <IconButton
-              icon={faFlag}
+              icon={review.flag ? faFlagged : faFlag}
               size="1x"
               handleOnClick={() => console.log()}
             />

@@ -29,7 +29,7 @@ export default {
                 type: "bugReport",
                 rating: 5,
                 text: "This is filler text that will hopefully be replaced by something that makes sense.",
-                flag: false,
+                flag: true,
               },
               {
                 _id: "614417bbef1760f1db981dd2",
