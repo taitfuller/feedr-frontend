@@ -6,35 +6,68 @@ import DetailView from "../../components/DetailView";
 import styles from "./style.module.css";
 import TextField from "../../components/TextField";
 import Menu from "../../components/Menu";
-import { ReviewSummary, TopicSummary } from "../../types";
+import { ReviewSummary, TopicSummary, User } from "../../types";
 import axios from "axios";
+import useLocalStorage from "react-use-localstorage";
+import { useHistory } from "react-router-dom";
 
 const DashboardPage: React.FC = () => {
+  const [token, setToken] = useLocalStorage("token");
+  const history = useHistory();
+
   const [search, setSearch] = useState("");
 
   const [topics, setTopics] = useState<TopicSummary[]>([]);
   const [summary, setSummary] = useState<ReviewSummary>();
   const [selectedTopic, setSelectedTopic] = useState<TopicSummary>();
+  const [user, setUser] = useState<User>();
 
   const [from] = useState(new Date(2020, 8, 15));
   const [to] = useState(new Date(2020, 9));
   const [platforms] = useState(["iOS", "Android"]);
 
   useEffect(() => {
+    const axiosInstance = axios.create({
+      headers: {
+        "Content-type": "Application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     (async () => {
-      const response = await axios.get<TopicSummary[]>("/api/topic", {
-        params: { from, to, platform: platforms },
-      });
-      setTopics(response.data);
+      try {
+        const response = await axiosInstance.get<TopicSummary[]>("/api/topic", {
+          params: { from, to, platform: platforms },
+        });
+        setTopics(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
     })();
 
     (async () => {
-      const response = await axios.get<ReviewSummary>("/api/review/summary", {
-        params: { from, to, platform: platforms },
-      });
-      setSummary(response.data);
+      try {
+        const response = await axiosInstance.get<ReviewSummary>(
+          "/api/review/summary",
+          {
+            params: { from, to, platform: platforms },
+          }
+        );
+        setSummary(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
     })();
-  }, [from, to, platforms]);
+
+    (async () => {
+      try {
+        const response = await axiosInstance.get<User>("/api/user");
+        setUser(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
+    })();
+  }, [from, to, platforms, token, history]);
 
   return (
     <div className={styles.grid}>
@@ -43,11 +76,16 @@ const DashboardPage: React.FC = () => {
           <h1>Viewing reviews from the past week</h1>
         </div>
         <div>
-          <Menu title="Logged in as taitfuller" width={210}>
+          <Menu title={`Logged in as ${user?.displayName}`} width={210}>
             <Menu.Item handleOnClick={() => console.log("Click Settings!")}>
               Settings
             </Menu.Item>
-            <Menu.Item handleOnClick={() => console.log("Click Log Out!")}>
+            <Menu.Item
+              handleOnClick={() => {
+                setToken("");
+                history.replace("/login");
+              }}
+            >
               Log Out
             </Menu.Item>
           </Menu>
