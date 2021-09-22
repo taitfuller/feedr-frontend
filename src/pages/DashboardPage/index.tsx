@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import StatsSummary from "../../components/StatsSummary";
 import TopicTable from "../../components/TopicTable";
@@ -10,6 +10,9 @@ import { ReviewSummary, TopicSummary, User } from "../../types";
 import axios from "axios";
 import useLocalStorage from "react-use-localstorage";
 import { useHistory } from "react-router-dom";
+import NewIssueModal from "../../components/Modal/NewIssueModal";
+import Button from "../../components/Button";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const DashboardPage: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
@@ -21,10 +24,13 @@ const DashboardPage: React.FC = () => {
   const [summary, setSummary] = useState<ReviewSummary>();
   const [selectedTopic, setSelectedTopic] = useState<TopicSummary>();
   const [user, setUser] = useState<User>();
+  const repository = "spotify";
 
   const [from] = useState(new Date(2020, 8, 15));
   const [to] = useState(new Date(2020, 9));
   const [platforms] = useState(["iOS", "Android"]);
+
+  const [showNewIssueModal, setShowNewIssueModal] = useState(false);
 
   useEffect(() => {
     const axiosInstance = axios.create({
@@ -68,6 +74,31 @@ const DashboardPage: React.FC = () => {
       }
     })();
   }, [from, to, platforms, token, history]);
+
+  const handleCreateIssue = useCallback(
+    async (title, body) => {
+      try {
+        await axios.post(
+          "/api/github/issue",
+          {
+            owner: user?.displayName,
+            repo: repository,
+            title,
+            body,
+          },
+          {
+            headers: {
+              "Content-type": "Application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
+    },
+    [user, repository, token, history]
+  );
 
   return (
     <div className={styles.grid}>
@@ -116,6 +147,31 @@ const DashboardPage: React.FC = () => {
       <div className={styles.detail}>
         <Card>
           <DetailView topic={selectedTopic} />
+          {selectedTopic && (
+            <div className={styles.detailButtons}>
+              <div className={`${styles.btn} ${styles.btnLeft}`}>
+                <Button
+                  text="New issue"
+                  icon={faGithub}
+                  handleOnClick={() => setShowNewIssueModal(true)}
+                />
+              </div>
+
+              <div className={styles.btn}>
+                <Button
+                  text="View all reviews"
+                  variant="secondary"
+                  handleOnClick={() => console.log("View all reviews")}
+                />
+              </div>
+            </div>
+          )}
+          <NewIssueModal
+            show={showNewIssueModal}
+            onSubmit={handleCreateIssue}
+            onClose={() => setShowNewIssueModal(false)}
+            topic={selectedTopic}
+          />
         </Card>
       </div>
     </div>

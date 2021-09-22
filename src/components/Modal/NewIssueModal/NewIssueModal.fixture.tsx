@@ -48,5 +48,10 @@ const example: TopicSummary = {
 };
 
 export default (
-  <NewIssueModal show={true} onClose={dummyClick} topic={example} />
+  <NewIssueModal
+    show={true}
+    onSubmit={async () => console.log("Submit!")}
+    onClose={dummyClick}
+    topic={example}
+  />
 );

@@ -43,19 +43,3 @@
   margin: 12px 0 0 0;
   overflow-y: auto;
 }
-
-.buttons {
-  display: flex;
-  flex-direction: row;
-  grid-column: 1 / 4;
-  grid-row: 4;
-  margin-top: 12px;
-}
-
-.btn {
-  flex: 1 auto 0;
-}
-
-.btnLeft {
-  margin-right: 12px;
-}
