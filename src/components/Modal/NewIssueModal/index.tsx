@@ -38,15 +38,14 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
   }, []);
 
   const body = useMemo(
-    () => `
-      ## User story\n
-      **As a** ${role}\n
-      **I want to** ${action}\n
-      **So that** ${rationale}\n
-      ## What could be the suspected root cause?\n
-      ${rootCause}\n
-      ## What action needs to be taken?\n
-      ${nextSteps}`,
+    () => `## User story\n
+**As a** ${role}
+**I want to** ${action}
+**So that** ${rationale}\n
+## What could be the suspected root cause?\n
+${rootCause}\n
+## What action needs to be taken?\n
+${nextSteps}`,
     [role, action, rationale, rootCause, nextSteps]
   );
 
