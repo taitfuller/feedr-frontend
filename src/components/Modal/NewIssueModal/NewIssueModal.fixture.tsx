@@ -89,8 +89,20 @@ const exampleFeature: TopicSummary = {
 };
 
 export default {
-  bug: <NewIssueModal show={true} onClose={dummyClick} topic={exampleBug} />,
+  bug: (
+    <NewIssueModal
+      show={true}
+      onSubmit={async () => console.log("Submit!")}
+      onClose={dummyClick}
+      topic={exampleBug}
+    />
+  ),
   feature: (
-    <NewIssueModal show={true} onClose={dummyClick} topic={exampleFeature} />
+    <NewIssueModal
+      show={true}
+      onSubmit={async () => console.log("Submit!")}
+      onClose={dummyClick}
+      topic={exampleFeature}
+    />
   ),
 };

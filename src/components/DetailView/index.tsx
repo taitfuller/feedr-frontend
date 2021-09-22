@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import styles from "./style.module.css";
-import Button from "../Button";
 import Chip from "../Chip";
 import Review from "../Review";
 import TextStat from "../TextStat";
-import percentageIncrease from "../../util/percentageIncrease";
-import NewIssueModal from "../Modal/NewIssueModal";
-import ViewAllModal from "../Modal/ViewAllModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { TopicSummary } from "../../types";
+import percentageIncrease from "../../util/percentageIncrease";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 
 interface DetailViewProps {
@@ -20,11 +16,8 @@ interface DetailViewProps {
 
 const DetailView: React.FC<DetailViewProps> = ({
   topic,
-  inDashboard = true,
+  inDashboard,
 }: DetailViewProps) => {
-  const [showNew, setShowNew] = useState(false);
-  const [showAll, setShowAll] = useState(false);
-
   if (!topic)
     return (
       <div className={styles.empty}>Select a topic to see more details.</div>
@@ -102,36 +95,7 @@ const DetailView: React.FC<DetailViewProps> = ({
               />
             ))}
         </div>
-        {inDashboard && (
-          <div className={styles.buttons}>
-            <div className={`${styles.btn} ${styles.btnLeft}`}>
-              <Button
-                text="New issue"
-                icon={faGithub}
-                handleOnClick={() => setShowNew(true)}
-              />
-            </div>
-
-            <div className={styles.btn}>
-              <Button
-                text="View all reviews"
-                variant="secondary"
-                handleOnClick={() => setShowAll(true)}
-              />
-            </div>
-          </div>
-        )}
       </div>
-      <NewIssueModal
-        show={showNew}
-        onClose={() => setShowNew(false)}
-        topic={topic}
-      />
-      <ViewAllModal
-        show={showAll}
-        onClose={() => setShowAll(false)}
-        topic={topic}
-      />
     </>
   );
 };

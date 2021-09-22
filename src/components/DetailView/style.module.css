@@ -9,8 +9,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 48px 48px 1fr auto;
-  height: 100%;
+  grid-template-rows: 48px 48px 1fr;
+  height: calc(100% - 48px);
 }
 
 .heading {
@@ -69,20 +69,4 @@
   right: 26px;
   position: absolute;
   width: 24px;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: row;
-  grid-column: 1 / 4;
-  grid-row: 4;
-  margin-top: 12px;
-}
-
-.btn {
-  flex: 1 auto 0;
-}
-
-.btnLeft {
-  margin-right: 12px;
 }

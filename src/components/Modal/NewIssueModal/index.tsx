@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Modal from "../index";
 import TextField from "../../TextField";
 import TextArea from "../../TextArea";
@@ -6,15 +6,18 @@ import styles from "./style.module.css";
 import Button from "../../Button";
 import DetailView from "../../DetailView";
 import { TopicSummary } from "../../../types";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 interface NewIssueModalProps {
   show: boolean;
+  onSubmit: (title: string, body: string) => Promise<void>;
   onClose: () => void;
   topic: TopicSummary | undefined;
 }
 
 const NewIssueModal: React.FC<NewIssueModalProps> = ({
   show,
+  onSubmit,
   onClose,
   topic,
 }: NewIssueModalProps) => {
@@ -25,8 +28,36 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
   const [rootCause, setRootCause] = useState("");
   const [nextSteps, setNextSteps] = useState("");
 
+  const clearState = useCallback(() => {
+    setTitle("");
+    setRole("");
+    setAction("");
+    setRationale("");
+    setRootCause("");
+    setNextSteps("");
+  }, []);
+
+  const body = useMemo(
+    () => `## User story\n
+**As a** ${role}
+**I want to** ${action}
+**So that** ${rationale}\n
+## What could be the suspected root cause?\n
+${rootCause}\n
+## What action needs to be taken?\n
+${nextSteps}`,
+    [role, action, rationale, rootCause, nextSteps]
+  );
+
   return (
-    <Modal show={show} onClose={onClose} heading="Create new issue">
+    <Modal
+      show={show}
+      onClose={() => {
+        clearState();
+        onClose();
+      }}
+      heading="Create new issue"
+    >
       <div className={styles.container}>
         <div className={styles.halfLeft}>
           <div className={styles.section}>
@@ -77,8 +108,21 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
           </div>
 
           <Button
-            text="Submit new issue"
-            handleOnClick={() => onClose()}
+            text="Create issue"
+            icon={faGithub}
+            handleOnClick={async () => {
+              await onSubmit(title, body);
+              clearState();
+              onClose();
+            }}
+            disabled={
+              !title ||
+              !role ||
+              !action ||
+              !rationale ||
+              !rootCause ||
+              !nextSteps
+            }
             variant="primary"
           />
         </div>
