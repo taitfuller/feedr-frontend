@@ -37,11 +37,23 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
           <div className={styles.userStory}>
             <h5 className={styles.userStoryHeading}>User story</h5>
             <p>As a</p>
-            <TextField textValue={role} onChangeHandler={setRole} />
+            <TextField
+              textValue={role}
+              onChangeHandler={setRole}
+              label="role"
+            />
             <p>I want to</p>
-            <TextField textValue={action} onChangeHandler={setAction} />
+            <TextField
+              textValue={action}
+              onChangeHandler={setAction}
+              label="action"
+            />
             <p>So that</p>
-            <TextField textValue={rationale} onChangeHandler={setRationale} />
+            <TextField
+              textValue={rationale}
+              onChangeHandler={setRationale}
+              label="rationale"
+            />
           </div>
 
           <div className={styles.section}>
