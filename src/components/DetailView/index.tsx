@@ -25,7 +25,10 @@ const DetailView: React.FC<DetailViewProps> = ({
   const [showNew, setShowNew] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  if (!topic) return <>Topic Undefined - heh</>;
+  if (!topic)
+    return (
+      <div className={styles.empty}>Select a topic to see more details.</div>
+    );
 
   const flaggedReviews = topic.reviews.filter((review) => review.flag);
   const flaggedPresent = flaggedReviews.length != 0;
