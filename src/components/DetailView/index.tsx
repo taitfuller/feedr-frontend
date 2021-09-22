@@ -1,26 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import styles from "./style.module.css";
-import Button from "../Button";
 import Chip from "../Chip";
 import Review from "../Review";
 import TextStat from "../TextStat";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { TopicSummary } from "../../types";
 import percentageIncrease from "../../util/percentageIncrease";
-import NewIssueModal from "../Modal/NewIssueModal";
 
 interface DetailViewProps {
   topic: TopicSummary | undefined;
-  showButtons?: boolean;
 }
 
-const DetailView: React.FC<DetailViewProps> = ({
-  topic,
-  showButtons = true,
-}: DetailViewProps) => {
-  const [showNew, setShowNew] = useState(false);
-
+const DetailView: React.FC<DetailViewProps> = ({ topic }: DetailViewProps) => {
   if (!topic) return <>Topic Undefined - heh</>;
 
   return (
@@ -73,31 +64,7 @@ const DetailView: React.FC<DetailViewProps> = ({
             />
           ))}
         </div>
-        {showButtons && (
-          <div className={styles.buttons}>
-            <div className={`${styles.btn} ${styles.btnLeft}`}>
-              <Button
-                text="New issue"
-                icon={faGithub}
-                handleOnClick={() => setShowNew(true)}
-              />
-            </div>
-
-            <div className={styles.btn}>
-              <Button
-                text="View all reviews"
-                variant="secondary"
-                handleOnClick={() => console.log("View all reviews")}
-              />
-            </div>
-          </div>
-        )}
       </div>
-      <NewIssueModal
-        show={showNew}
-        onClose={() => setShowNew(false)}
-        topic={topic}
-      />
     </>
   );
 };
