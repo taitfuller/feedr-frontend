@@ -78,7 +78,7 @@ const TopicTable: React.FC<TopicTableProps> = ({
     );
 
   return (
-    <table {...getTableProps()}>
+    <table {...getTableProps()} style={{ borderSpacing: 0 }}>
       <thead>
         {headerGroups.map((headerGroup) => {
           const { key: headerGroupKey, ...getHeaderGroupProps } =
@@ -113,6 +113,7 @@ const TopicTable: React.FC<TopicTableProps> = ({
           );
         })}
       </thead>
+      <div style={{ height: "8px" }} />
       <tbody {...getTableBodyProps()}>
         {rows.map((row) => {
           prepareRow(row);
@@ -122,15 +123,21 @@ const TopicTable: React.FC<TopicTableProps> = ({
               key={rowKey}
               {...getRowProps}
               className={styles.row}
-              style={
-                row.original === selected ? { backgroundColor: "pink" } : {}
-              }
               onClick={() => onSelect(row.original)}
             >
               {row.cells.map((cell) => {
                 const { key: cellKey, ...getCellProps } = cell.getCellProps();
                 return (
-                  <td key={cellKey} {...getCellProps} className={styles.cell}>
+                  <td
+                    key={cellKey}
+                    {...getCellProps}
+                    className={styles.cell}
+                    style={
+                      row.original === selected
+                        ? { backgroundColor: "var(--fuchsia-60)" }
+                        : {}
+                    }
+                  >
                     {cell.render("Cell")}
                   </td>
                 );
