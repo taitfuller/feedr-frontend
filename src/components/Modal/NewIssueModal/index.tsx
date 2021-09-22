@@ -45,7 +45,11 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
           </div>
 
           <div className={styles.section}>
-            <h5>What could be the suspected root cause?</h5>
+            <h5>
+              {topic?.type == "bugReport"
+                ? "What could be the suspected root cause?"
+                : "What value would be added by this feature?"}
+            </h5>
             <TextArea textValue={rootCause} onChangeHandler={setRootCause} />
           </div>
 
