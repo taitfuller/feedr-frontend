@@ -29,8 +29,8 @@ const DashboardPage: React.FC = () => {
   const [user, setUser] = useState<User>();
   const repository = "spotify";
 
-  const [from] = useState(new Date(2020, 8, 15));
-  const [to] = useState(new Date(2020, 9));
+  const [from] = useState(new Date(2021, 8, 1));
+  const [to] = useState(new Date(2021, 8, 24));
   const [platforms] = useState(["iOS", "Android"]);
 
   const [showNewIssueModal, setShowNewIssueModal] = useState(false);
