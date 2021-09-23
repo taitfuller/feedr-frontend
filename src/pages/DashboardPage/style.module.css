@@ -27,6 +27,11 @@
   grid-row: 3 / 4;
 }
 
+.tableOverflow {
+  height: calc(100% - 48px);
+  overflow-y: auto;
+}
+
 .detail {
   grid-column: 2;
   grid-row: 3;

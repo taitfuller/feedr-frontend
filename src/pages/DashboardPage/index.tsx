@@ -228,11 +228,13 @@ const DashboardPage: React.FC = () => {
             onChangeHandler={setSearch}
             label="Search..."
           />
-          <TopicTable
-            topics={topics}
-            selected={selectedTopicSummary}
-            onSelect={setSelectedTopicSummary}
-          />
+          <div className={styles.tableOverflow}>
+            <TopicTable
+              topics={topics}
+              selected={selectedTopicSummary}
+              onSelect={setSelectedTopicSummary}
+            />
+          </div>
         </Card>
       </div>
       <div className={styles.detail}>
