@@ -109,7 +109,7 @@ const DashboardPage: React.FC = () => {
           <h1>Viewing reviews from the past week</h1>
         </div>
         <div>
-          <Menu title={`Logged in as ${user?.displayName}`} width={210}>
+          <Menu title={`Logged in as ${user?.displayName ?? ""}`} width={210}>
             <Menu.Item handleOnClick={() => console.log("Click Settings!")}>
               Settings
             </Menu.Item>
