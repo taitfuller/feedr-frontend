@@ -6,13 +6,25 @@ import Review from "../Review";
 import TextStat from "../TextStat";
 import { TopicSummary } from "../../types";
 import percentageIncrease from "../../util/percentageIncrease";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFlag } from "@fortawesome/free-solid-svg-icons";
 
 interface DetailViewProps {
   topic: TopicSummary | undefined;
+  inDashboard?: boolean;
 }
 
-const DetailView: React.FC<DetailViewProps> = ({ topic }: DetailViewProps) => {
-  if (!topic) return <>Topic Undefined - heh</>;
+const DetailView: React.FC<DetailViewProps> = ({
+  topic,
+  inDashboard,
+}: DetailViewProps) => {
+  if (!topic)
+    return (
+      <div className={styles.empty}>Select a topic to see more details.</div>
+    );
+
+  const flaggedReviews = topic.reviews.filter((review) => review.flag);
+  const flaggedPresent = flaggedReviews.length != 0;
 
   return (
     <>
@@ -55,14 +67,33 @@ const DetailView: React.FC<DetailViewProps> = ({ topic }: DetailViewProps) => {
         </div>
         <div className={styles.reviews}>
           <h5>Contributing reviews</h5>
-          {topic.reviews.map((review) => (
-            <Review
-              key={review._id}
-              rating={review.rating}
-              date={dayjs(review.date).subtract(9, "hour")}
-              text={review.text}
-            />
-          ))}
+          {flaggedPresent && (
+            <div className={!inDashboard ? styles.flagged : ""}>
+              {!inDashboard && (
+                <div className={styles.flagIndicator}>
+                  <FontAwesomeIcon icon={faFlag} color="#ffffff" size="xs" />
+                </div>
+              )}
+              {flaggedReviews.map((review) => (
+                <Review
+                  key={review._id}
+                  rating={review.rating}
+                  date={dayjs(review.date).subtract(9, "hour")}
+                  text={review.text}
+                />
+              ))}
+            </div>
+          )}
+          {topic.reviews
+            .filter((review) => !review.flag)
+            .map((review) => (
+              <Review
+                key={review._id}
+                rating={review.rating}
+                date={dayjs(review.date).subtract(9, "hour")}
+                text={review.text}
+              />
+            ))}
         </div>
       </div>
     </>

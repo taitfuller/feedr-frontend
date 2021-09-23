@@ -28,6 +28,11 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
   const [rootCause, setRootCause] = useState("");
   const [nextSteps, setNextSteps] = useState("");
 
+  const dynamicPrompt =
+    topic?.type == "bugReport"
+      ? "What could be the suspected root cause?"
+      : "What value would be added by this feature?";
+
   const clearState = useCallback(() => {
     setTitle("");
     setRole("");
@@ -42,11 +47,11 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
 **As a** ${role}
 **I want to** ${action}
 **So that** ${rationale}\n
-## What could be the suspected root cause?\n
+## ${dynamicPrompt}\n
 ${rootCause}\n
 ## What action needs to be taken?\n
 ${nextSteps}`,
-    [role, action, rationale, rootCause, nextSteps]
+    [role, action, rationale, dynamicPrompt, rootCause, nextSteps]
   );
 
   return (
@@ -61,28 +66,46 @@ ${nextSteps}`,
       <div className={styles.container}>
         <div className={styles.halfLeft}>
           <div className={styles.section}>
-            <h5>Title</h5>
+            <h5 style={{ marginBottom: "8px" }}>Title</h5>
             <TextField textValue={title} onChangeHandler={setTitle} />
           </div>
 
           <div className={styles.userStory}>
             <h5 className={styles.userStoryHeading}>User story</h5>
             <p>As a</p>
-            <TextField textValue={role} onChangeHandler={setRole} />
+            <TextField
+              textValue={role}
+              onChangeHandler={setRole}
+              label="role"
+            />
             <p>I want to</p>
-            <TextField textValue={action} onChangeHandler={setAction} />
+            <TextField
+              textValue={action}
+              onChangeHandler={setAction}
+              label="action"
+            />
             <p>So that</p>
-            <TextField textValue={rationale} onChangeHandler={setRationale} />
+            <TextField
+              textValue={rationale}
+              onChangeHandler={setRationale}
+              label="rationale"
+            />
           </div>
 
           <div className={styles.section}>
-            <h5>What could be the suspected root cause?</h5>
-            <TextArea textValue={rootCause} onChangeHandler={setRootCause} />
+            <TextArea
+              textValue={rootCause}
+              onChangeHandler={setRootCause}
+              label={dynamicPrompt}
+            />
           </div>
 
           <div className={styles.section}>
-            <h5>What action needs to be taken?</h5>
-            <TextArea textValue={nextSteps} onChangeHandler={setNextSteps} />
+            <TextArea
+              textValue={nextSteps}
+              onChangeHandler={setNextSteps}
+              label="What action needs to be taken?"
+            />
           </div>
 
           <Button
@@ -106,7 +129,7 @@ ${nextSteps}`,
         </div>
 
         <div className={styles.halfRight}>
-          <DetailView topic={topic} />
+          <DetailView topic={topic} inDashboard={false} />
         </div>
       </div>
     </Modal>

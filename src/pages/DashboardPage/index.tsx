@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import NewIssueModal from "../../components/Modal/NewIssueModal";
 import Button from "../../components/Button";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import ViewAllModal from "../../components/Modal/ViewAllModal";
 
 const DashboardPage: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
@@ -31,6 +32,7 @@ const DashboardPage: React.FC = () => {
   const [platforms] = useState(["iOS", "Android"]);
 
   const [showNewIssueModal, setShowNewIssueModal] = useState(false);
+  const [showViewAllModal, setShowViewAllModal] = useState(false);
 
   useEffect(() => {
     const axiosInstance = axios.create({
@@ -161,7 +163,7 @@ const DashboardPage: React.FC = () => {
                 <Button
                   text="View all reviews"
                   variant="secondary"
-                  handleOnClick={() => console.log("View all reviews")}
+                  handleOnClick={() => setShowViewAllModal(true)}
                 />
               </div>
             </div>
@@ -170,6 +172,11 @@ const DashboardPage: React.FC = () => {
             show={showNewIssueModal}
             onSubmit={handleCreateIssue}
             onClose={() => setShowNewIssueModal(false)}
+            topic={selectedTopic}
+          />
+          <ViewAllModal
+            show={showViewAllModal}
+            onClose={() => setShowViewAllModal(false)}
             topic={selectedTopic}
           />
         </Card>

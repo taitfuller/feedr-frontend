@@ -16,12 +16,17 @@
 }
 
 .row {
+  border-radius: 16px;
   cursor: pointer;
 }
 
 .cell {
   font-size: 13px;
   padding: 12px;
+}
+
+.cell:first-child {
+  border-radius: 16px 0 0 16px;
 }
 
 .cell:nth-child(2) {
@@ -32,4 +37,8 @@
 .cell:nth-child(3) {
   font-weight: bold;
   text-align: right;
+}
+
+.cell:last-child {
+  border-radius: 0 16px 16px 0;
 }
