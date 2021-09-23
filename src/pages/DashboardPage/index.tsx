@@ -235,11 +235,6 @@ const DashboardPage: React.FC = () => {
           />
         </Card>
       </div>
-      <div className={styles.graph}>
-        <Card>
-          <h2>Types of reviews over time</h2>
-        </Card>
-      </div>
       <div className={styles.detail}>
         <Card>
           <DetailView topic={selectedTopicSummary} inDashboard={true} />
