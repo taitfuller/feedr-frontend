@@ -227,6 +227,7 @@ const DashboardPage: React.FC = () => {
             textValue={search}
             onChangeHandler={setSearch}
             label="Search..."
+            disabled={true}
           />
           <div className={styles.tableOverflow}>
             <TopicTable
