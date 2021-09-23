@@ -53,5 +53,6 @@ export default (
     onClose={dummyClick}
     topic={example}
     onFlag={() => console.log("Flag")}
+    onRemove={() => console.log("Remove")}
   />
 );

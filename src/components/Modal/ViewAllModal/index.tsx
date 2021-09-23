@@ -15,6 +15,7 @@ interface ViewAllModalProps {
   onClose: () => void;
   topic: Topic | undefined;
   onFlag: (id: string, value: boolean) => void;
+  onRemove: (id: string) => void;
 }
 
 const ViewAllModal: React.FC<ViewAllModalProps> = ({
@@ -22,6 +23,7 @@ const ViewAllModal: React.FC<ViewAllModalProps> = ({
   onClose,
   topic,
   onFlag,
+  onRemove,
 }: ViewAllModalProps) => {
   const averageRating = useMemo(
     () =>
@@ -73,7 +75,7 @@ const ViewAllModal: React.FC<ViewAllModalProps> = ({
             <IconButton
               icon={faTrashAlt}
               size="1x"
-              handleOnClick={() => console.log()}
+              handleOnClick={() => onRemove(review._id)}
             />
           </div>
         ))}

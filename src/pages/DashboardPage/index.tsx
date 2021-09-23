@@ -102,7 +102,7 @@ const DashboardPage: React.FC = () => {
   const handleCreateIssue = useCallback(
     async (title, body) => {
       try {
-        await axios.patch(
+        await axios.post(
           "/api/github/issue",
           {
             owner: user?.displayName,
@@ -149,6 +149,38 @@ const DashboardPage: React.FC = () => {
           {
             flag: value,
           },
+          {
+            headers: {
+              "Content-type": "Application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+        setSelectedTopic(selectedTopicBackup);
+      }
+    },
+    [selectedTopic, token, history]
+  );
+
+  const handleRemoveReview = useCallback(
+    async (id: string) => {
+      const selectedTopicBackup = selectedTopic;
+      setSelectedTopic(
+        selectedTopic
+          ? {
+              ...selectedTopic,
+              reviews: selectedTopic?.reviews.filter(
+                (review) => review._id !== id
+              ),
+            }
+          : undefined
+      );
+      try {
+        await axios.patch(
+          `/api/review/${id}/remove-topic`,
+          {},
           {
             headers: {
               "Content-type": "Application/json",
@@ -241,6 +273,7 @@ const DashboardPage: React.FC = () => {
           <ViewAllModal
             show={showViewAllModal}
             onFlag={handleFlagReview}
+            onRemove={handleRemoveReview}
             onClose={() => setShowViewAllModal(false)}
             topic={selectedTopic ?? selectedTopicSummary}
           />
