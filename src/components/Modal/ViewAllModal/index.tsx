@@ -1,8 +1,7 @@
-import React from "react";
-import { TopicSummary } from "../../../types";
+import React, { useMemo } from "react";
+import { Topic } from "../../../types";
 import Modal from "../index";
 import TextStat from "../../TextStat";
-import percentageIncrease from "../../../util/percentageIncrease";
 import Chip from "../../Chip";
 import Review from "../../Review";
 import IconButton from "../../IconButton";
@@ -14,7 +13,7 @@ import dayjs from "dayjs";
 interface ViewAllModalProps {
   show: boolean;
   onClose: () => void;
-  topic: TopicSummary | undefined;
+  topic: Topic | undefined;
 }
 
 const ViewAllModal: React.FC<ViewAllModalProps> = ({
@@ -22,6 +21,14 @@ const ViewAllModal: React.FC<ViewAllModalProps> = ({
   onClose,
   topic,
 }: ViewAllModalProps) => {
+  const averageRating = useMemo(
+    () =>
+      topic &&
+      topic.reviews.reduce((sum, review) => sum + review.rating, 0) /
+        topic.reviews.length,
+    [topic]
+  );
+
   if (!topic)
     return (
       <Modal show={show} onClose={onClose} heading={"Error"}>
@@ -38,24 +45,12 @@ const ViewAllModal: React.FC<ViewAllModalProps> = ({
       <div className={styles.stats}>
         <Chip type={topic.type} />
         <TextStat
-          stat={topic.counts.newReviews}
+          stat={topic.reviews.length}
           type="count"
-          desc="new reviews"
-        />
-        <TextStat
-          stat={
-            topic?.counts.oldReviews
-              ? percentageIncrease(
-                  topic.counts.newReviews,
-                  topic.counts.oldReviews
-                )
-              : undefined
-          }
-          type="percentage"
           desc="total reviews"
         />
         <TextStat
-          stat={topic.counts.averageRating}
+          stat={averageRating ?? 0}
           type="rating"
           desc="average rating"
         />

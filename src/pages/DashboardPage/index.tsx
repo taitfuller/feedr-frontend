@@ -6,7 +6,7 @@ import DetailView from "../../components/DetailView";
 import styles from "./style.module.css";
 import TextField from "../../components/TextField";
 import Menu from "../../components/Menu";
-import { ReviewSummary, TopicSummary, User } from "../../types";
+import { ReviewSummary, Topic, TopicSummary, User } from "../../types";
 import axios from "axios";
 import useLocalStorage from "react-use-localstorage";
 import { useHistory } from "react-router-dom";
@@ -23,7 +23,9 @@ const DashboardPage: React.FC = () => {
 
   const [topics, setTopics] = useState<TopicSummary[]>([]);
   const [summary, setSummary] = useState<ReviewSummary>();
-  const [selectedTopic, setSelectedTopic] = useState<TopicSummary>();
+  const [selectedTopicSummary, setSelectedTopicSummary] =
+    useState<TopicSummary>();
+  const [selectedTopic, setSelectedTopic] = useState<Topic>();
   const [user, setUser] = useState<User>();
   const repository = "spotify";
 
@@ -102,6 +104,25 @@ const DashboardPage: React.FC = () => {
     [user, repository, token, history]
   );
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get<Topic>(
+          `/api/topic/${selectedTopicSummary?._id}`,
+          {
+            headers: {
+              "Content-type": "Application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setSelectedTopic(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
+    })();
+  }, [selectedTopicSummary, token, history]);
+
   return (
     <div className={styles.grid}>
       <div className={styles.header}>
@@ -136,8 +157,8 @@ const DashboardPage: React.FC = () => {
           />
           <TopicTable
             topics={topics}
-            selected={selectedTopic}
-            onSelect={setSelectedTopic}
+            selected={selectedTopicSummary}
+            onSelect={setSelectedTopicSummary}
           />
         </Card>
       </div>
@@ -148,8 +169,8 @@ const DashboardPage: React.FC = () => {
       </div>
       <div className={styles.detail}>
         <Card>
-          <DetailView topic={selectedTopic} />
-          {selectedTopic && (
+          <DetailView topic={selectedTopicSummary} />
+          {selectedTopicSummary && (
             <div className={styles.detailButtons}>
               <div className={`${styles.btn} ${styles.btnLeft}`}>
                 <Button
@@ -172,12 +193,12 @@ const DashboardPage: React.FC = () => {
             show={showNewIssueModal}
             onSubmit={handleCreateIssue}
             onClose={() => setShowNewIssueModal(false)}
-            topic={selectedTopic}
+            topic={selectedTopicSummary}
           />
           <ViewAllModal
             show={showViewAllModal}
             onClose={() => setShowViewAllModal(false)}
-            topic={selectedTopic}
+            topic={selectedTopic ?? selectedTopicSummary}
           />
         </Card>
       </div>
