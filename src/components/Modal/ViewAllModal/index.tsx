@@ -14,12 +14,14 @@ interface ViewAllModalProps {
   show: boolean;
   onClose: () => void;
   topic: Topic | undefined;
+  onFlag: (id: string, value: boolean) => void;
 }
 
 const ViewAllModal: React.FC<ViewAllModalProps> = ({
   show,
   onClose,
   topic,
+  onFlag,
 }: ViewAllModalProps) => {
   const averageRating = useMemo(
     () =>
@@ -66,7 +68,7 @@ const ViewAllModal: React.FC<ViewAllModalProps> = ({
             <IconButton
               icon={review.flag ? faFlagged : faFlag}
               size="1x"
-              handleOnClick={() => console.log()}
+              handleOnClick={() => onFlag(review._id, !review.flag)}
             />
             <IconButton
               icon={faTrashAlt}

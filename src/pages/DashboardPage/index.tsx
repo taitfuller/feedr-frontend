@@ -79,10 +79,30 @@ const DashboardPage: React.FC = () => {
     })();
   }, [from, to, platforms, token, history]);
 
+  useEffect(() => {
+    (async () => {
+      if (selectedTopicSummary)
+        try {
+          const response = await axios.get<Topic>(
+            `/api/topic/${selectedTopicSummary._id}`,
+            {
+              headers: {
+                "Content-type": "Application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setSelectedTopic(response.data);
+        } catch (error) {
+          if (error.response.status === 401) history.replace("/login");
+        }
+    })();
+  }, [selectedTopicSummary, token, history]);
+
   const handleCreateIssue = useCallback(
     async (title, body) => {
       try {
-        await axios.post(
+        await axios.patch(
           "/api/github/issue",
           {
             owner: user?.displayName,
@@ -104,25 +124,45 @@ const DashboardPage: React.FC = () => {
     [user, repository, token, history]
   );
 
-  useEffect(() => {
-    (async () => {
-      if (selectedTopicSummary)
-        try {
-          const response = await axios.get<Topic>(
-            `/api/topic/${selectedTopicSummary._id}`,
-            {
-              headers: {
-                "Content-type": "Application/json",
-                Authorization: `Bearer ${token}`,
-              },
+  const handleFlagReview = useCallback(
+    async (id: string, value: boolean) => {
+      const selectedTopicBackup = selectedTopic;
+      setSelectedTopic(
+        selectedTopic
+          ? {
+              ...selectedTopic,
+              reviews:
+                selectedTopic?.reviews.map((review) =>
+                  review._id === id
+                    ? {
+                        ...review,
+                        flag: !review.flag,
+                      }
+                    : review
+                ) ?? [],
             }
-          );
-          setSelectedTopic(response.data);
-        } catch (error) {
-          if (error.response.status === 401) history.replace("/login");
-        }
-    })();
-  }, [selectedTopicSummary, token, history]);
+          : undefined
+      );
+      try {
+        await axios.patch(
+          `/api/review/${id}/flag`,
+          {
+            flag: value,
+          },
+          {
+            headers: {
+              "Content-type": "Application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+        setSelectedTopic(selectedTopicBackup);
+      }
+    },
+    [selectedTopic, token, history]
+  );
 
   return (
     <div className={styles.grid}>
@@ -200,6 +240,7 @@ const DashboardPage: React.FC = () => {
           />
           <ViewAllModal
             show={showViewAllModal}
+            onFlag={handleFlagReview}
             onClose={() => setShowViewAllModal(false)}
             topic={selectedTopic ?? selectedTopicSummary}
           />
