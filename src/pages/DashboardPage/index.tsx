@@ -242,7 +242,7 @@ const DashboardPage: React.FC = () => {
       </div>
       <div className={styles.detail}>
         <Card>
-          <DetailView topic={selectedTopicSummary} />
+          <DetailView topic={selectedTopicSummary} inDashboard={true} />
           {selectedTopicSummary && (
             <div className={styles.detailButtons}>
               <div className={`${styles.btn} ${styles.btnLeft}`}>
