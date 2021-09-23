@@ -6,7 +6,7 @@ import DetailView from "../../components/DetailView";
 import styles from "./style.module.css";
 import TextField from "../../components/TextField";
 import Menu from "../../components/Menu";
-import { ReviewSummary, TopicSummary, User } from "../../types";
+import { ReviewSummary, Topic, TopicSummary, User } from "../../types";
 import axios from "axios";
 import useLocalStorage from "react-use-localstorage";
 import { useHistory } from "react-router-dom";
@@ -23,7 +23,9 @@ const DashboardPage: React.FC = () => {
 
   const [topics, setTopics] = useState<TopicSummary[]>([]);
   const [summary, setSummary] = useState<ReviewSummary>();
-  const [selectedTopic, setSelectedTopic] = useState<TopicSummary>();
+  const [selectedTopicSummary, setSelectedTopicSummary] =
+    useState<TopicSummary>();
+  const [selectedTopic, setSelectedTopic] = useState<Topic>();
   const [user, setUser] = useState<User>();
   const repository = "spotify";
 
@@ -77,6 +79,26 @@ const DashboardPage: React.FC = () => {
     })();
   }, [from, to, platforms, token, history]);
 
+  useEffect(() => {
+    (async () => {
+      if (selectedTopicSummary)
+        try {
+          const response = await axios.get<Topic>(
+            `/api/topic/${selectedTopicSummary._id}`,
+            {
+              headers: {
+                "Content-type": "Application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setSelectedTopic(response.data);
+        } catch (error) {
+          if (error.response.status === 401) history.replace("/login");
+        }
+    })();
+  }, [selectedTopicSummary, token, history]);
+
   const handleCreateIssue = useCallback(
     async (title, body) => {
       try {
@@ -102,6 +124,78 @@ const DashboardPage: React.FC = () => {
     [user, repository, token, history]
   );
 
+  const handleFlagReview = useCallback(
+    async (id: string, value: boolean) => {
+      const selectedTopicBackup = selectedTopic;
+      setSelectedTopic(
+        selectedTopic
+          ? {
+              ...selectedTopic,
+              reviews:
+                selectedTopic?.reviews.map((review) =>
+                  review._id === id
+                    ? {
+                        ...review,
+                        flag: !review.flag,
+                      }
+                    : review
+                ) ?? [],
+            }
+          : undefined
+      );
+      try {
+        await axios.patch(
+          `/api/review/${id}/flag`,
+          {
+            flag: value,
+          },
+          {
+            headers: {
+              "Content-type": "Application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+        setSelectedTopic(selectedTopicBackup);
+      }
+    },
+    [selectedTopic, token, history]
+  );
+
+  const handleRemoveReview = useCallback(
+    async (id: string) => {
+      const selectedTopicBackup = selectedTopic;
+      setSelectedTopic(
+        selectedTopic
+          ? {
+              ...selectedTopic,
+              reviews: selectedTopic?.reviews.filter(
+                (review) => review._id !== id
+              ),
+            }
+          : undefined
+      );
+      try {
+        await axios.patch(
+          `/api/review/${id}/remove-topic`,
+          {},
+          {
+            headers: {
+              "Content-type": "Application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+        setSelectedTopic(selectedTopicBackup);
+      }
+    },
+    [selectedTopic, token, history]
+  );
+
   return (
     <div className={styles.grid}>
       <div className={styles.header}>
@@ -109,7 +203,7 @@ const DashboardPage: React.FC = () => {
           <h1>Viewing reviews from the past week</h1>
         </div>
         <div>
-          <Menu title={`Logged in as ${user?.displayName}`} width={210}>
+          <Menu title={`Logged in as ${user?.displayName ?? ""}`} width={210}>
             <Menu.Item handleOnClick={() => console.log("Click Settings!")}>
               Settings
             </Menu.Item>
@@ -136,8 +230,8 @@ const DashboardPage: React.FC = () => {
           />
           <TopicTable
             topics={topics}
-            selected={selectedTopic}
-            onSelect={setSelectedTopic}
+            selected={selectedTopicSummary}
+            onSelect={setSelectedTopicSummary}
           />
         </Card>
       </div>
@@ -148,8 +242,8 @@ const DashboardPage: React.FC = () => {
       </div>
       <div className={styles.detail}>
         <Card>
-          <DetailView topic={selectedTopic} />
-          {selectedTopic && (
+          <DetailView topic={selectedTopicSummary} inDashboard={true} />
+          {selectedTopicSummary && (
             <div className={styles.detailButtons}>
               <div className={`${styles.btn} ${styles.btnLeft}`}>
                 <Button
@@ -173,11 +267,15 @@ const DashboardPage: React.FC = () => {
             onSubmit={handleCreateIssue}
             onClose={() => setShowNewIssueModal(false)}
             topic={selectedTopic}
+            from={from}
+            to={to}
           />
           <ViewAllModal
             show={showViewAllModal}
+            onFlag={handleFlagReview}
+            onRemove={handleRemoveReview}
             onClose={() => setShowViewAllModal(false)}
-            topic={selectedTopic}
+            topic={selectedTopic ?? selectedTopicSummary}
           />
         </Card>
       </div>

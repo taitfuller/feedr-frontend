@@ -5,14 +5,16 @@ import TextArea from "../../TextArea";
 import styles from "./style.module.css";
 import Button from "../../Button";
 import DetailView from "../../DetailView";
-import { TopicSummary } from "../../../types";
+import { Review, Topic, TopicSummary } from "../../../types";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 interface NewIssueModalProps {
   show: boolean;
   onSubmit: (title: string, body: string) => Promise<void>;
   onClose: () => void;
-  topic: TopicSummary | undefined;
+  topic: Topic | undefined;
+  from: Date;
+  to: Date;
 }
 
 const NewIssueModal: React.FC<NewIssueModalProps> = ({
@@ -20,6 +22,8 @@ const NewIssueModal: React.FC<NewIssueModalProps> = ({
   onSubmit,
   onClose,
   topic,
+  from,
+  to,
 }: NewIssueModalProps) => {
   const [title, setTitle] = useState("");
   const [role, setRole] = useState("");
@@ -52,6 +56,28 @@ ${rootCause}\n
 ## What action needs to be taken?\n
 ${nextSteps}`,
     [role, action, rationale, dynamicPrompt, rootCause, nextSteps]
+  );
+
+  const newReviews = useMemo<Review[]>(
+    () =>
+      topic?.reviews.filter(
+        (review) => from <= new Date(review.date) && new Date(review.date) <= to
+      ) ?? [],
+    [topic, from, to]
+  );
+
+  const counts = useMemo<TopicSummary["counts"]>(
+    () => ({
+      newReviews: newReviews?.length ?? 0,
+      oldReviews:
+        topic?.reviews.filter((review) => new Date(review.date) < from)
+          .length ?? 0,
+      averageRating: newReviews
+        ? newReviews.reduce((sum, review) => sum + review.rating, 0) /
+          newReviews.length
+        : 0,
+    }),
+    [newReviews, topic, from]
   );
 
   return (
@@ -129,7 +155,12 @@ ${nextSteps}`,
         </div>
 
         <div className={styles.halfRight}>
-          <DetailView topic={topic} inDashboard={false} />
+          <DetailView
+            topic={
+              topic ? { ...topic, counts, reviews: newReviews } : undefined
+            }
+            inDashboard={false}
+          />
         </div>
       </div>
     </Modal>

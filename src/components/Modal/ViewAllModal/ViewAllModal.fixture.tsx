@@ -48,5 +48,11 @@ const example: TopicSummary = {
 };
 
 export default (
-  <ViewAllModal show={true} onClose={dummyClick} topic={example} />
+  <ViewAllModal
+    show={true}
+    onClose={dummyClick}
+    topic={example}
+    onFlag={() => console.log("Flag")}
+    onRemove={() => console.log("Remove")}
+  />
 );

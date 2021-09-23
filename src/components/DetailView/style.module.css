@@ -56,6 +56,7 @@
   border: 2px solid var(--iris-100);
   border-radius: 14px;
   margin-top: 12px;
+  position: relative;
 }
 
 .flagIndicator {
@@ -66,7 +67,7 @@
   height: 24px;
   justify-content: center;
   margin: -13px -13px 0 0;
-  right: 26px;
+  right: 11px;
   position: absolute;
   width: 24px;
 }
