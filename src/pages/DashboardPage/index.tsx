@@ -106,20 +106,21 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const response = await axios.get<Topic>(
-          `/api/topic/${selectedTopicSummary?._id}`,
-          {
-            headers: {
-              "Content-type": "Application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setSelectedTopic(response.data);
-      } catch (error) {
-        if (error.response.status === 401) history.replace("/login");
-      }
+      if (selectedTopicSummary)
+        try {
+          const response = await axios.get<Topic>(
+            `/api/topic/${selectedTopicSummary._id}`,
+            {
+              headers: {
+                "Content-type": "Application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setSelectedTopic(response.data);
+        } catch (error) {
+          if (error.response.status === 401) history.replace("/login");
+        }
     })();
   }, [selectedTopicSummary, token, history]);
 
@@ -193,7 +194,9 @@ const DashboardPage: React.FC = () => {
             show={showNewIssueModal}
             onSubmit={handleCreateIssue}
             onClose={() => setShowNewIssueModal(false)}
-            topic={selectedTopicSummary}
+            topic={selectedTopic}
+            from={from}
+            to={to}
           />
           <ViewAllModal
             show={showViewAllModal}

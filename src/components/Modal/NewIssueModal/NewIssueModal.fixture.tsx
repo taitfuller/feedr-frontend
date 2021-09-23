@@ -95,6 +95,8 @@ export default {
       onSubmit={async () => console.log("Submit!")}
       onClose={dummyClick}
       topic={exampleBug}
+      from={new Date()}
+      to={new Date()}
     />
   ),
   feature: (
@@ -103,6 +105,8 @@ export default {
       onSubmit={async () => console.log("Submit!")}
       onClose={dummyClick}
       topic={exampleFeature}
+      from={new Date()}
+      to={new Date()}
     />
   ),
 };
