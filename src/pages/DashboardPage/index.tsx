@@ -226,14 +226,14 @@ const DashboardPage: React.FC = () => {
           <TextField
             textValue={search}
             onChangeHandler={setSearch}
-            label="Search..."
-            disabled={true}
+            label="Search summaries..."
           />
           <div className={styles.tableOverflow}>
             <TopicTable
               topics={topics}
               selected={selectedTopicSummary}
               onSelect={setSelectedTopicSummary}
+              search={search}
             />
           </div>
         </Card>
