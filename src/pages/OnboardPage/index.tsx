@@ -13,8 +13,8 @@ const OnboardPage: React.FC = () => {
   const history = useHistory();
 
   const [user, setUser] = useState<User>();
-  const [modelledApps] = useState(["Spotify"]);
-  const [repositories] = useState(["spotify"]);
+  const [modelledApps, setModelledApps] = useState<string[]>([]);
+  const [repositories, setRepositories] = useState<string[]>([]);
 
   const [selectedRepository, setSelectedRepository] = useState("");
   const [selectedApp, setSelectedApp] = useState("");
@@ -34,6 +34,28 @@ const OnboardPage: React.FC = () => {
       try {
         const response = await axiosInstance.get<User>("/api/user");
         setUser(response.data);
+        if (response.data.feeds.length > 0)
+          history.push(`/dashboard/${response.data.feeds[0]._id}`);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
+    })();
+
+    (async () => {
+      try {
+        const response = await axiosInstance.get<string[]>(
+          "/api/github/repositories"
+        );
+        setRepositories(response.data);
+      } catch (error) {
+        if (error.response.status === 401) history.replace("/login");
+      }
+    })();
+
+    (async () => {
+      try {
+        const response = await axiosInstance.get<string[]>("/api/feed");
+        setModelledApps(response.data);
       } catch (error) {
         if (error.response.status === 401) history.replace("/login");
       }
