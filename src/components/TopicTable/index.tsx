@@ -5,6 +5,8 @@ import { TopicSummary } from "../../types";
 import Chip from "../Chip";
 import percentageIncrease from "../../util/percentageIncrease";
 import { matchSorter } from "match-sorter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
 interface TopicTableProps {
   topics: TopicSummary[];
@@ -124,11 +126,21 @@ const TopicTable: React.FC<TopicTableProps> = ({
                   >
                     {column.render("Header")}
                     <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <FontAwesomeIcon
+                            icon={faCaretDown}
+                            className={styles.sortIcon}
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            icon={faCaretUp}
+                            className={styles.sortIcon}
+                          />
+                        )
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </th>
                 );

@@ -42,3 +42,7 @@
 .cell:last-child {
   border-radius: 0 16px 16px 0;
 }
+
+.sortIcon {
+  margin-left: 12px;
+}
