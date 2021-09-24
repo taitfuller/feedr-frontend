@@ -1,0 +1,32 @@
+.container {
+  background: linear-gradient(248.66deg, #5d5fef 0%, rgba(93, 95, 239, 0) 100%),
+    var(--fuchsia-100);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr auto 1fr;
+  height: 100vh;
+}
+
+.card {
+  grid-row: 2 /3;
+  grid-column: 2 /3;
+}
+
+.card h1 {
+  text-align: center;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.item p {
+  margin-bottom: 0.5em;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 1em;
+}

@@ -9,6 +9,7 @@ interface SelectComposition {
 interface SelectProps {
   children: React.ReactElement[];
   onChangeHandler: (arg0: string) => void;
+  width?: number;
 }
 
 interface SelectOptionProps {
@@ -24,6 +25,7 @@ const SelectOption: React.FC<SelectOptionProps> = ({
 const Select: React.FC<SelectProps> & SelectComposition = ({
   children,
   onChangeHandler,
+  width = 140,
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(0);
@@ -37,7 +39,7 @@ const Select: React.FC<SelectProps> & SelectComposition = ({
   return (
     <DropdownListContainer
       title={children[selected]}
-      width={140}
+      width={width}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >

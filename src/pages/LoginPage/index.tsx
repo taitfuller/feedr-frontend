@@ -10,11 +10,10 @@ const LoginPage: React.FC = () => (
       <Card>
         <h1>Welcome to FEEDR!</h1>
         <Button
-          text={"Sign in with GitHub"}
+          text="Sign in with GitHub"
           icon={faGithub}
-          variant={"github"}
+          variant="github"
           handleOnClick={() => (window.location.href = "/api/auth/github")}
-          disabled={false}
         />
       </Card>
     </div>

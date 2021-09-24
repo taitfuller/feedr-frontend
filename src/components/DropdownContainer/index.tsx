@@ -35,7 +35,7 @@ const DropdownContainer: React.FC<DropdownContainerProps> = ({
     >
       <button
         className={`${styles.button} ${
-          !hideButtonWhenOpen && styles.buttonShowWhenOpen
+          !hideButtonWhenOpen && isOpen && styles.buttonShowWhenOpen
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >

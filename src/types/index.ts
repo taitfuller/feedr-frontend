@@ -33,8 +33,15 @@ export interface TopicSummary extends Topic {
   };
 }
 
-export type User = {
+export interface Feed {
+  _id: string;
+  appName: string;
+  repoName: string;
+}
+
+export interface User {
   _id: string;
   githubId: number;
   displayName: string;
-};
+  feeds: Feed[];
+}

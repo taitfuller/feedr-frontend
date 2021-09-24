@@ -9,7 +9,7 @@ import Menu from "../../components/Menu";
 import { ReviewSummary, Topic, TopicSummary, User } from "../../types";
 import axios from "axios";
 import useLocalStorage from "react-use-localstorage";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import NewIssueModal from "../../components/Modal/NewIssueModal";
 import Button from "../../components/Button";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -18,6 +18,7 @@ import ViewAllModal from "../../components/Modal/ViewAllModal";
 const DashboardPage: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
   const history = useHistory();
+  const { feed } = useParams<{ feed: string }>();
 
   const [search, setSearch] = useState("");
 
@@ -47,7 +48,7 @@ const DashboardPage: React.FC = () => {
     (async () => {
       try {
         const response = await axiosInstance.get<TopicSummary[]>("/api/topic", {
-          params: { from, to, platform: platforms },
+          params: { from, to, platform: platforms, feed },
         });
         setTopics(response.data);
       } catch (error) {
@@ -60,7 +61,7 @@ const DashboardPage: React.FC = () => {
         const response = await axiosInstance.get<ReviewSummary>(
           "/api/review/summary",
           {
-            params: { from, to, platform: platforms },
+            params: { from, to, platform: platforms, feed },
           }
         );
         setSummary(response.data);
@@ -77,7 +78,7 @@ const DashboardPage: React.FC = () => {
         if (error.response.status === 401) history.replace("/login");
       }
     })();
-  }, [from, to, platforms, token, history]);
+  }, [from, to, platforms, token, history, feed]);
 
   useEffect(() => {
     (async () => {
