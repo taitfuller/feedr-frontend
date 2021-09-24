@@ -8,7 +8,7 @@ import OnboardPage from "../pages/OnboardPage";
 
 const App: React.FC = () => (
   <Switch>
-    <ProtectedRoute path="/dashboard">
+    <ProtectedRoute path="/dashboard/:feed">
       <DashboardPage />
     </ProtectedRoute>
     <Route path="/login">

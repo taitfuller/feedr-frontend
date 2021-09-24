@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "react-use-localstorage";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -39,6 +39,27 @@ const OnboardPage: React.FC = () => {
       }
     })();
   }, [token, history]);
+
+  const handleCreateFeed = useCallback(async () => {
+    try {
+      const response = await axios.post(
+        "/api/feed",
+        {
+          appName: selectedApp,
+          repoName: selectedRepository,
+        },
+        {
+          headers: {
+            "Content-type": "Application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      history.push(`/dashboard/${response.data}`);
+    } catch (error) {
+      if (error.response.status === 401) history.replace("/login");
+    }
+  }, [selectedApp, selectedRepository, token, history]);
 
   return (
     <div className={styles.container}>
@@ -88,7 +109,7 @@ const OnboardPage: React.FC = () => {
               <Button
                 text="Go to Dashboard"
                 variant="primary"
-                handleOnClick={() => history.push("/dashboard")}
+                handleOnClick={handleCreateFeed}
                 disabled={
                   !selectedApp ||
                   selectedApp === appSelectMessage ||
