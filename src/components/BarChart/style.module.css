@@ -28,8 +28,11 @@
   background-color: var(--fuchsia-100);
 }
 
+.labels {
+  display: grid;
+}
+
 .barLabel {
-  position: absolute;
   transition: left 0.3s;
 }
 

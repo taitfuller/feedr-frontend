@@ -29,8 +29,8 @@ const DashboardPage: React.FC = () => {
   const [user, setUser] = useState<User>();
   const repository = "spotify";
 
-  const [from] = useState(new Date(2020, 8, 15));
-  const [to] = useState(new Date(2020, 9));
+  const [from] = useState(new Date(2021, 8, 1));
+  const [to] = useState(new Date(2021, 8, 24));
   const [platforms] = useState(["iOS", "Android"]);
 
   const [showNewIssueModal, setShowNewIssueModal] = useState(false);
@@ -227,17 +227,15 @@ const DashboardPage: React.FC = () => {
             textValue={search}
             onChangeHandler={setSearch}
             label="Search..."
+            disabled={true}
           />
-          <TopicTable
-            topics={topics}
-            selected={selectedTopicSummary}
-            onSelect={setSelectedTopicSummary}
-          />
-        </Card>
-      </div>
-      <div className={styles.graph}>
-        <Card>
-          <h2>Types of reviews over time</h2>
+          <div className={styles.tableOverflow}>
+            <TopicTable
+              topics={topics}
+              selected={selectedTopicSummary}
+              onSelect={setSelectedTopicSummary}
+            />
+          </div>
         </Card>
       </div>
       <div className={styles.detail}>
