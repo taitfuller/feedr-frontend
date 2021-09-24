@@ -4,6 +4,7 @@ import ProtectedRoute from "../auth/ProtectedRoute";
 import "./App.css";
 import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
+import OnboardPage from "../pages/OnboardPage";
 
 const App: React.FC = () => (
   <Switch>
@@ -13,9 +14,10 @@ const App: React.FC = () => (
     <Route path="/login">
       <LoginPage />
     </Route>
-    <Route path="/">
-      <Redirect to="/dashboard" />
-    </Route>
+    <ProtectedRoute path="/">
+      <OnboardPage />
+      <Redirect to="/" />
+    </ProtectedRoute>
   </Switch>
 );
 
