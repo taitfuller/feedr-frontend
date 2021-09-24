@@ -36,6 +36,7 @@ export default (
       topics={topics}
       selected={undefined}
       onSelect={(topic) => console.log(topic)}
+      search=""
     />
   </Card>
 );
