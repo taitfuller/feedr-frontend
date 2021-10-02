@@ -11,13 +11,15 @@ const App: React.FC = () => (
     <ProtectedRoute path="/dashboard/:feed">
       <DashboardPage />
     </ProtectedRoute>
+    <ProtectedRoute path="/onboard">
+      <OnboardPage />
+    </ProtectedRoute>
     <Route path="/login">
       <LoginPage />
     </Route>
-    <ProtectedRoute path="/">
-      <OnboardPage />
-      <Redirect to="/" />
-    </ProtectedRoute>
+    <Route path="/">
+      <Redirect to="/onboard" />
+    </Route>
   </Switch>
 );
 
